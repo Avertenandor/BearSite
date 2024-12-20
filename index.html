@@ -62,31 +62,6 @@
             z-index: -2;
         }
 
-        .btn {
-            display: inline-block;
-            font-size: 1rem;
-            font-weight: 500;
-            padding: 0.6rem 1.2rem;
-            border: 2px solid #d4af60;
-            border-radius: 4px;
-            background: transparent;
-            cursor: pointer;
-            position: relative;
-            transition: background 0.3s, box-shadow 0.3s, transform 0.3s, color 0.3s;
-            color: #f2f2f2;
-            text-decoration: none;
-            text-align: center;
-            white-space: nowrap;
-            margin: 0.5rem;
-        }
-
-        .btn:hover {
-            background: #d4af60;
-            color: #000;
-            box-shadow: 0 0 10px #d4af60;
-            transform: scale(1.05);
-        }
-
         header {
             position: fixed;
             width: 100%;
@@ -260,61 +235,29 @@
             margin-bottom: 2rem;
         }
 
-        footer {
-            padding: 2rem;
-            text-align: center;
-            background: rgba(0,0,0,0.8);
-            border-top: 1px solid #333;
-            z-index: 2;
-            position: relative;
-            color: #f2f2f2;
-            font-size:0.9rem;
-        }
-
-        footer p {
-            margin:0;
-            opacity: 0.7;
-        }
-
-        .snowflakes, .gifts {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 3;
-            overflow: hidden;
-        }
-
-        .snowflake {
-            position: absolute;
-            top: -10px;
-            color: #fff;
+        .btn {
+            display: inline-block;
             font-size: 1rem;
-            user-select: none;
-            animation: snowfall 10s linear infinite;
-            opacity: 0.8;
+            font-weight: 500;
+            padding: 0.6rem 1.2rem;
+            border: 2px solid #d4af60;
+            border-radius: 4px;
+            background: transparent;
+            cursor: pointer;
+            position: relative;
+            transition: background 0.3s, box-shadow 0.3s, transform 0.3s, color 0.3s;
+            color: #f2f2f2;
+            text-decoration: none;
+            text-align: center;
+            white-space: nowrap;
+            margin: 0.5rem;
         }
 
-        /* Анимация для снега */
-        @keyframes snowfall {
-            0% { transform: translateY(-10px); }
-            100% { transform: translateY(110vh); }
-        }
-
-        .gift {
-            position: absolute;
-            top: -10px;
-            font-size: 1.5rem;
-            animation: giftrain 12s linear infinite;
-            opacity:0.9;
-        }
-
-        /* Анимация для подарков */
-        @keyframes giftrain {
-            0% { transform: translateY(-10px); }
-            100% { transform: translateY(110vh); }
+        .btn:hover {
+            background: #d4af60;
+            color: #000;
+            box-shadow: 0 0 10px #d4af60;
+            transform: scale(1.05);
         }
 
         .join-buttons {
@@ -325,38 +268,112 @@
             margin-top: 2rem;
         }
 
+        /* Зоны падения снега и подарков */
+        .falling-zone {
+            position: fixed;
+            top: 0;
+            height: 100%;
+            pointer-events: none;
+            z-index: 3;
+            overflow: hidden;
+        }
+
+        .falling-left {
+            left:0;
+            width: calc((100% - 1200px)/2);
+            min-width:100px;
+        }
+
+        .falling-right {
+            right:0;
+            width: calc((100% - 1200px)/2);
+            min-width:100px;
+        }
+
+        .snowflake, .gift {
+            position: absolute;
+            top: -10px;
+            user-select: none;
+            opacity: 0.8;
+        }
+
+        .snowflake {
+            color: #fff;
+            font-size: 1rem;
+            animation: snowfall 10s linear infinite;
+        }
+
+        @keyframes snowfall {
+            0% { transform: translateY(-10px); }
+            100% { transform: translateY(110vh); }
+        }
+
+        .gift {
+            font-size: 1.5rem;
+            animation: giftrain 12s linear infinite;
+        }
+
+        @keyframes giftrain {
+            0% { transform: translateY(-10px); }
+            100% { transform: translateY(110vh); }
+        }
+
+        /* Адаптация под мобильные устройства */
         @media (max-width: 768px) {
             header {
                 flex-direction: column;
                 align-items: flex-start;
+                padding: 1rem;
             }
 
             nav ul {
                 flex-direction: column;
                 align-items: flex-start;
+                gap: 0.3rem;
+            }
+
+            .logo {
+                font-size: 1rem;
+                margin-bottom:0.5rem;
+            }
+
+            nav a {
+                font-size:0.9rem;
+                padding:0.3rem 0.6rem;
             }
 
             .hero h1 {
-                font-size: 2rem;
+                font-size: 1.8rem;
             }
 
             .hero h2 {
+                font-size: 1.1rem;
+            }
+
+            .hero p, section p, section li, .typewriter {
+                font-size:0.9rem;
+                line-height:1.4;
+            }
+
+            section h2 {
                 font-size: 1.3rem;
             }
 
-            .hero p, section p, section li {
-                font-size:1rem;
-            }
-
             .btn {
-                width: 100%;
-                text-align:center;
+                font-size:0.9rem;
+                padding:0.5rem 1rem;
             }
 
             .join-buttons {
                 flex-direction: column;
+                gap:0.5rem;
+            }
+
+            .falling-left, .falling-right {
+                display:none;
             }
         }
+
     </style>
 </head>
 <body>
@@ -373,6 +390,9 @@
             </ul>
         </nav>
     </header>
+
+    <div class="falling-zone falling-left"></div>
+    <div class="falling-zone falling-right"></div>
 
     <section class="hero" id="intro">
         <div class="typewriter" data-text="Добро пожаловать!"></div>
@@ -456,11 +476,11 @@
           observer.observe(section);
         });
 
-        // Эффект падающего снега
-        const snowflakesContainer = document.createElement('div');
-        snowflakesContainer.classList.add('snowflakes');
-        document.body.appendChild(snowflakesContainer);
+        // Снег и подарки генерятся в зонах слева и справа
+        const leftZone = document.querySelector('.falling-left');
+        const rightZone = document.querySelector('.falling-right');
 
+        // Снег
         const snowflakeCount = 50;
         for (let i = 0; i < snowflakeCount; i++) {
             const snowflake = document.createElement('div');
@@ -470,16 +490,16 @@
             snowflake.style.fontSize = (Math.random() * 1.5 + 0.5) + 'rem';
             snowflake.style.animationDuration = (Math.random() * 5 + 10) + 's';
             snowflake.style.animationDelay = Math.random() * 5 + 's';
-            snowflakesContainer.appendChild(snowflake);
+            if (i < snowflakeCount / 2) {
+                leftZone.appendChild(snowflake);
+            } else {
+                rightZone.appendChild(snowflake);
+            }
         }
 
-        // Эффект падающих подарков
-        const giftsContainer = document.createElement('div');
-        giftsContainer.classList.add('gifts');
-        document.body.appendChild(giftsContainer);
-
+        // Подарки
         const giftCount = 20;
-        const giftSymbols = ["🎁","🎀","🎉"]; // несколько вариантов подарков
+        const giftSymbols = ["🎁","🎀","🎉"];
         for (let i = 0; i < giftCount; i++) {
             const gift = document.createElement('div');
             gift.classList.add('gift');
@@ -488,7 +508,11 @@
             gift.style.fontSize = (Math.random() * 1.5 + 1) + 'rem';
             gift.style.animationDuration = (Math.random() * 5 + 12) + 's';
             gift.style.animationDelay = Math.random() * 5 + 's';
-            giftsContainer.appendChild(gift);
+            if (i < giftCount / 2) {
+                leftZone.appendChild(gift);
+            } else {
+                rightZone.appendChild(gift);
+            }
         }
 
         // Функция печати текста
@@ -519,3 +543,4 @@
     </script>
 </body>
 </html>
+
