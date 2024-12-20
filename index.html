@@ -69,11 +69,11 @@
             left: 0;
             z-index: 999;
             background: rgba(0,0,0,0.8);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 1rem 2rem;
             border-bottom: 1px solid #333;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 1rem;
         }
 
         .logo {
@@ -81,20 +81,25 @@
             font-size: 2rem;
             color: #f2f2f2;
             white-space: nowrap;
+            margin-bottom: 1rem;
+            text-align: center;
         }
 
         nav ul {
             list-style: none;
             display: flex;
-            gap: 0.5rem;
             flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.5rem;
+            max-width: 400px;
         }
 
         nav li {
-            font-size: 0.95rem;
+            flex: 1 1 45%;
         }
 
         nav a {
+            display: block;
             border: 2px solid #d4af60;
             padding: 0.4rem 0.8rem;
             color: #f2f2f2;
@@ -103,6 +108,7 @@
             text-decoration: none;
             text-align: center;
             transition: background 0.3s, transform 0.3s;
+            font-size:1rem;
         }
 
         nav a:hover {
@@ -133,6 +139,7 @@
             max-width: 90%;
             word-wrap: break-word;
             font-size: 1rem;
+            line-height:1.6;
         }
 
         @keyframes caret {
@@ -147,9 +154,7 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            padding: 7rem 1rem 2rem;
-            position: relative;
-            z-index: 2;
+            padding: 9rem 1rem 2rem; /* добавляем сверху под заголовок и навигацию */
             text-align: center;
             max-width:1200px;
             margin:0 auto;
@@ -157,6 +162,7 @@
 
         .hero h1, .hero h2 {
             color: #f2f2f2;
+            line-height:1.4;
         }
 
         .hero h1 {
@@ -173,15 +179,14 @@
 
         .hero p {
             font-size: 1rem;
-            line-height: 1.4;
+            line-height: 1.6;
             color: #f2f2f2;
             max-width: 800px;
-            text-align: center;
             margin:0.5rem auto;
         }
 
         main {
-            padding: 4rem 1rem;
+            padding: 2rem 1rem; 
             max-width: 1200px;
             margin: 0 auto;
             z-index: 2;
@@ -189,7 +194,7 @@
         }
 
         section {
-            margin-bottom: 4rem;
+            margin-bottom: 3rem;
             max-width:800px;
             margin-left:auto;
             margin-right:auto;
@@ -203,7 +208,7 @@
 
         section p, section li {
             font-size: 1rem;
-            line-height: 1.4;
+            line-height: 1.6;
             margin-bottom: 1rem;
         }
 
@@ -284,11 +289,21 @@
 
         @media (max-width: 768px) {
             .logo {
-                font-size: 1.3rem;
+                font-size: 1.5rem;
+                margin-bottom:0.5rem;
+            }
+
+            nav li {
+                flex:1 1 45%;
+            }
+
+            nav a {
+                font-size:0.9rem;
+                padding:0.4rem 0.6rem;
             }
 
             .hero {
-                padding:5rem 1rem 2rem;
+                padding:10rem 1rem 2rem; 
             }
 
             .hero h1 {
@@ -300,21 +315,15 @@
             }
 
             .hero p, section p, section li, .typewriter {
-                font-size:0.9rem;
+                font-size:0.95rem;
             }
 
             section h2 {
-                font-size: 1.2rem;
-            }
-
-            nav a {
-                font-size:0.9rem;
-                padding:0.4rem;
+                font-size: 1.3rem;
             }
 
             .btn {
-                font-size:0.9rem;
-                padding:0.5rem 1rem;
+                font-size:0.95rem;
             }
         }
     </style>
@@ -334,7 +343,7 @@
 
     <div class="effects"></div>
 
-    <section class="hero" id="intro">
+    <section class="hero" id="intro" data-section>
         <div class="typewriter" data-text="Добро пожаловать!"></div>
         <div class="typewriter" data-text="Представьте мир, где процессинг — не просто технология, а искусство..."></div>
         <div class="typewriter" data-text="Мы используем подходы, которые казались недостижимыми..."></div>
@@ -416,23 +425,10 @@
           observer.observe(section);
         });
 
-        // Генерируем снег и подарки по всему экрану
-        const effectsContainer = document.querySelector('.effects') || (function(){
-            const c = document.createElement('div');
-            c.classList.add('effects');
-            document.body.appendChild(c);
-            return c;
-        })();
-
-        const effects = document.querySelector('.effects');
-        effects.style.position = 'fixed';
-        effects.style.top = '0';
-        effects.style.left = '0';
-        effects.style.right = '0';
-        effects.style.bottom = '0';
-        effects.style.pointerEvents = 'none';
-        effects.style.zIndex = '3';
-        effects.style.overflow = 'hidden';
+        // Добавим эффекты
+        const effects = document.createElement('div');
+        effects.classList.add('effects');
+        document.body.appendChild(effects);
 
         const snowflakeCount = 50;
         for (let i = 0; i < snowflakeCount; i++) {
@@ -459,7 +455,7 @@
             effects.appendChild(gift);
         }
 
-        // Новая скорость печати ~55ms (примерно 42% быстрее, чем 97ms)
+        // Увеличена скорость печати (была 97 мс, теперь ~55 мс)
         const typingDelay = 55;
 
         function typeText(element, text, index, callback) {
