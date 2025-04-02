@@ -285,6 +285,77 @@
     .cursor-hover { background: var(--accent-purple) !important; box-shadow: 0 0 10px var(--accent-purple); }
     .cursor-ring-hover { border-color: rgba(156,95,255,0.5); }
   </style>
+  
+  <!-- Новый блок для улучшенной мобильной адаптации -->
+  <style>
+    @media (max-width: 600px) {
+      /* Заголовок и логотип – выравнивание по центру, вертикальное расположение */
+      header {
+        flex-direction: column;
+        align-items: center;
+      }
+      header .container {
+        padding: 0 10px;
+      }
+      .logo-container {
+        flex-direction: column;
+        align-items: center;
+        gap: 5px;
+      }
+      .brand-name {
+        font-size: 1.5rem;
+      }
+
+      /* Бегущая строка – немного уменьшим отступы */
+      .ticker-wrapper {
+        padding: 0.5rem;
+      }
+
+      /* Геро-секция – центрирование заголовков и текста */
+      .hero-content {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-lg);
+      }
+      .hero-title {
+        font-size: 2rem;
+        text-align: center;
+      }
+      .hero-description {
+        text-align: center;
+      }
+      .hero-features {
+        justify-content: center;
+      }
+      .action-button {
+        max-width: 100%;
+      }
+
+      /* Экран авторизации и кабинет */
+      #login-screen, #cabinet {
+        margin: var(--spacing-sm);
+        padding: var(--spacing-md);
+      }
+      #login-screen h1 {
+        font-size: 1.6rem;
+      }
+      #login-screen input, 
+      #login-screen button {
+        max-width: 100%;
+        font-size: 1rem;
+      }
+
+      /* Футер – перевод в одну колонку и центрирование элементов */
+      .footer-content {
+        grid-template-columns: 1fr;
+      }
+      .token-address-box {
+        flex-direction: column;
+        align-items: center;
+      }
+    }
+  </style>
+  
+  <!-- Остальные стили и скрипты остаются без изменений -->
 </head>
 <body>
   <!-- Кастомный курсор -->
@@ -2011,9 +2082,7 @@
         stroke-linecap: round;
     }
     
-    .timer-bg {
-        stroke: rgba(255, 255, 255, 0.1);
-    }
+    .timer-bg { stroke: rgba(255,255,255,0.1); }
     
     .timer-progress {
         stroke: var(--accent-yellow);
@@ -2114,7 +2183,7 @@
         const countdownEl = document.getElementById('idleCountdown');
         const timerProgress = document.getElementById('idleTimerProgress');
         
-        let idleCountdown = 60; // 60 seconds countdown
+        let idleCountdown = 60; // 60 секунд countdown
         let countdownInterval;
         
         function startIdleCountdown() {
