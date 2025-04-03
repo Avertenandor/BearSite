@@ -1090,7 +1090,1871 @@
         <div id="virtualDayDisplay">День: 0</div>
         <div id="debtIndicator">Долг: 0 PLEX</div>
       </div>
+    <!-- Основной баланс для карусели подарков с улучшенной прокруткой -->
+    <div class="gift-balances">
+        <div class="gift-balance-header">
+            <h3>Балансы каруселей</h3>
+            <div class="balance-update-time">Обновлено: <span id="lastBalanceUpdate">сейчас</span></div>
+        </div>
+        
+        <div class="gift-balance-items">
+            <div class="gift-balance-item" data-carousel="daily">
+                <div class="balance-icon"><i class="ri-calendar-line"></i></div>
+                <div class="balance-content">
+                    <span class="balance-label">Баланс ежедневной карусели:</span>
+                    <span class="balance-value">25 PLEX</span>
+                </div>
+                <div class="balance-trend positive">
+                    <i class="ri-arrow-up-line"></i>
+                    <span>5%</span>
+                </div>
+            </div>
+            
+            <div class="gift-balance-item" data-carousel="five-day">
+                <div class="balance-icon"><i class="ri-calendar-check-line"></i></div>
+                <div class="balance-content">
+                    <span class="balance-label">Баланс 5-дневной карусели:</span>
+                    <span class="balance-value">100 PLEX</span>
+                </div>
+                <div class="balance-trend positive">
+                    <i class="ri-arrow-up-line"></i>
+                    <span>12%</span>
+                </div>
+            </div>
+            
+            <div class="gift-balance-item" data-carousel="saturday">
+                <div class="balance-icon"><i class="ri-calendar-event-line"></i></div>
+                <div class="balance-content">
+                    <span class="balance-label">Баланс субботней карусели:</span>
+                    <span class="balance-value">250 PLEX</span>
+                </div>
+                <div class="balance-trend positive">
+                    <i class="ri-arrow-up-line"></i>
+                    <span>18%</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="gift-balances-footer">
+            <div class="total-balance">
+                Общий баланс: <span class="total-value">375 PLEX</span>
+            </div>
+            <button id="refreshBalances" class="refresh-button">
+                <i class="ri-refresh-line"></i> Обновить балансы
+            </button>
+        </div>
+    </div>
 
+    <style>
+        /* Улучшенные стили для баланса каруселей */
+        .gift-balances {
+            background: rgba(28, 35, 49, 0.6);
+            border-radius: var(--border-radius-lg);
+            padding: var(--spacing-md);
+            margin-bottom: var(--spacing-lg);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .gift-balances:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 48px rgba(0, 0, 0, 0.15);
+        }
+
+        .gift-balance-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--spacing-md);
+            padding-bottom: var(--spacing-sm);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .balance-update-time {
+            font-size: 0.8rem;
+            color: var(--text-tertiary);
+        }
+
+        .gift-balance-items {
+            margin-bottom: var(--spacing-md);
+        }
+
+        .gift-balance-item {
+            display: flex;
+            align-items: center;
+            padding: var(--spacing-sm);
+            margin-bottom: var(--spacing-sm);
+            border-radius: var(--border-radius-lg);
+            background: rgba(255, 255, 255, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .gift-balance-item:hover {
+            background: rgba(255, 255, 255, 0.08);
+            transform: translateX(5px);
+        }
+
+        .gift-balance-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .balance-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: rgba(45, 127, 249, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: var(--spacing-sm);
+            color: var(--accent-blue);
+            font-size: 1.2rem;
+        }
+
+        .balance-content {
+            flex: 1;
+        }
+
+        .balance-label {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+        }
+
+        .balance-value {
+            font-weight: 600;
+            color: var(--accent-blue);
+        }
+
+        .balance-trend {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .balance-trend.positive {
+            color: var(--accent-green);
+        }
+
+        .balance-trend.negative {
+            color: var(--accent-red);
+        }
+
+        .gift-balances-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: var(--spacing-sm);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .total-balance {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .total-value {
+            font-weight: 600;
+            color: var(--accent-blue);
+        }
+
+        .refresh-button {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(45, 127, 249, 0.1);
+            border: 1px solid rgba(45, 127, 249, 0.2);
+            color: var(--accent-blue);
+            border-radius: 20px;
+            padding: 6px 12px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .refresh-button:hover {
+            background: rgba(45, 127, 249, 0.2);
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 768px) {
+            .gift-balance-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px;
+            }
+
+            .balance-content {
+                width: 100%;
+            }
+
+            .balance-trend {
+                margin-left: auto;
+            }
+
+            .gift-balances-footer {
+                flex-direction: column;
+                gap: 10px;
+                align-items: center;
+            }
+
+            .refresh-button {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+
+    <!-- Раздел "5-дневная карусель подарков" с улучшенным UX -->
+    <div class="gift-carousel five-day-carousel">
+        <div class="demo-badge pulse-badge">ДЕМО РЕЖИМ</div>
+        
+        <div class="carousel-header">
+            <div class="carousel-icon">
+                <i class="ri-calendar-check-line"></i>
+            </div>
+            <div class="carousel-title">
+                <h3>5-дневная карусель подарков</h3>
+                <p class="carousel-subtitle">В обычном режиме доступна раз в 5 дней. В демо-версии доступна бесплатно!</p>
+            </div>
+        </div>
+        
+        <div class="carousel-info">
+            <div class="carousel-stat">
+                <div class="stat-icon"><i class="ri-gift-2-line"></i></div>
+                <div class="stat-content">
+                    <div class="stat-label">Шанс редкого приза</div>
+                    <div class="stat-value">12%</div>
+                </div>
+            </div>
+            <div class="carousel-stat">
+                <div class="stat-icon"><i class="ri-coin-line"></i></div>
+                <div class="stat-content">
+                    <div class="stat-label">Баланс карусели</div>
+                    <div class="stat-value">100 PLEX</div>
+                </div>
+            </div>
+        </div>
+        
+        <button id="fiveDayGiftButton" class="special-gift-button">
+            <span class="button-glow"></span>
+            <i class="ri-gift-2-line button-icon"></i>
+            <span class="button-text">Получить подарок</span>
+            <i class="ri-arrow-right-line button-arrow"></i>
+        </button>
+        
+        <div id="fiveDayGiftContainer" style="display:none;">
+            <div class="carousel-progress">
+                <div class="progress-step active">
+                    <div class="step-icon"><i class="ri-loader-4-line"></i></div>
+                    <div class="step-label">Запуск</div>
+                </div>
+                <div class="progress-line"></div>
+                <div class="progress-step">
+                    <div class="step-icon"><i class="ri-shuffle-line"></i></div>
+                    <div class="step-label">Выбор</div>
+                </div>
+                <div class="progress-line"></div>
+                <div class="progress-step">
+                    <div class="step-icon"><i class="ri-trophy-line"></i></div>
+                    <div class="step-label">Приз</div>
+                </div>
+            </div>
+            
+            <div id="fiveDayGiftCarouselBox" class="carousel-container">
+                <div class="carousel-track" id="fiveDayGiftTrack">
+                    <!-- Содержимое карусели добавляется через JavaScript -->
+                </div>
+                <div class="carousel-spotlight">
+                    <div class="spotlight-glow"></div>
+                </div>
+                <div class="carousel-controls">
+                    <div class="carousel-arrow left"><i class="ri-arrow-left-s-line"></i></div>
+                    <div class="carousel-arrow right"><i class="ri-arrow-right-s-line"></i></div>
+                </div>
+            </div>
+            
+            <div id="fiveDayGiftResult" class="gift-result-container"></div>
+        </div>
+        
+        <div class="next-availability">
+            <div class="timer-icon">
+                <i class="ri-time-line"></i>
+                <svg class="timer-progress" viewBox="0 0 36 36">
+                    <path class="timer-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"></path>
+                    <path class="timer-path" stroke-dasharray="80, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"></path>
+                </svg>
+            </div>
+            <div class="timer-content">
+                <div class="timer-label">В стандартном режиме будет доступна через:</div>
+                <div class="timer-value" id="fiveDayCountdown">5 дн. 00:00:00</div>
+            </div>
+        </div>
+    </div>
+
+    <style>
+    /* Улучшенные стили для 5-дневной карусели подарков */
+    .five-day-carousel {
+        position: relative;
+        margin-top: var(--spacing-xl);
+        background: linear-gradient(135deg, rgba(45,127,249,0.15), rgba(0,226,195,0.15));
+        border: 1px solid rgba(45,127,249,0.3);
+        overflow: hidden;
+        transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .five-day-carousel:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    .five-day-carousel::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 100px;
+        background: linear-gradient(180deg, rgba(45,127,249,0.1), transparent);
+        z-index: 0;
+        pointer-events: none;
+    }
+
+    .demo-badge {
+        position: absolute;
+        top: -12px;
+        right: 20px;
+        background: var(--accent-yellow);
+        color: #000;
+        padding: 4px 12px;
+        border-radius: 15px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        box-shadow: 0 4px 8px rgba(255, 204, 0, 0.3);
+        z-index: 2;
+    }
+
+    .pulse-badge {
+        animation: badge-pulse 2s infinite;
+    }
+
+    @keyframes badge-pulse {
+        0%, 100% { transform: scale(1); }
+        50% { transform: scale(1.08); box-shadow: 0 4px 12px rgba(255, 204, 0, 0.5); }
+    }
+
+    .carousel-header {
+        display: flex;
+        align-items: center;
+        gap: var(--spacing-md);
+        margin-bottom: var(--spacing-md);
+        position: relative;
+        z-index: 1;
+    }
+
+    .carousel-icon {
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, var(--accent-blue), var(--accent-turquoise));
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+        color: white;
+        box-shadow: 0 5px 15px rgba(0, 226, 195, 0.3);
+    }
+
+    .carousel-title {
+        flex: 1;
+    }
+
+    .carousel-title h3 {
+        margin: 0 0 5px 0;
+        font-size: 1.3rem;
+    }
+
+    .carousel-subtitle {
+        margin: 0;
+        color: var(--text-secondary);
+        font-size: 0.9rem;
+    }
+
+    .carousel-info {
+        display: flex;
+        gap: var(--spacing-md);
+        margin-bottom: var(--spacing-md);
+        flex-wrap: wrap;
+    }
+
+    .carousel-stat {
+        flex: 1;
+        min-width: 120px;
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: var(--border-radius-lg);
+        padding: var(--spacing-sm);
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        transition: all 0.3s ease;
+    }
+
+    .carousel-stat:hover {
+        background: rgba(255, 255, 255, 0.08);
+        transform: translateY(-2px);
+    }
+
+    .stat-icon {
+        width: 36px;
+        height: 36px;
+        background: rgba(0, 226, 195, 0.1);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--accent-turquoise);
+        font-size: 1.2rem;
+    }
+
+    .stat-content {
+        flex: 1;
+    }
+
+    .stat-label {
+        font-size: 0.8rem;
+        color: var(--text-secondary);
+        margin-bottom: 2px;
+    }
+
+    .stat-value {
+        font-weight: 600;
+        color: var(--text-primary);
+    }
+
+    .special-gift-button {
+        position: relative;
+        width: 100%;
+        max-width: 300px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 12px 20px;
+        border-radius: 30px;
+        border: none;
+        background: linear-gradient(45deg, var(--accent-blue), var(--accent-turquoise));
+        color: white;
+        font-weight: 600;
+        font-size: 1.1rem;
+        margin: 0 auto var(--spacing-md);
+        cursor: pointer;
+        overflow: hidden;
+        transition: all 0.3s ease;
+        gap: 10px;
+        box-shadow: 0 8px 15px rgba(0, 226, 195, 0.3);
+    }
+
+    .button-glow {
+        position: absolute;
+        width: 50px;
+        height: 100%;
+        background: rgba(255, 255, 255, 0.3);
+        left: -100px;
+        top: 0;
+        transform: skewX(-25deg);
+        animation: button-shine 3s infinite;
+        filter: blur(5px);
+    }
+
+    @keyframes button-shine {
+        0% { left: -100px; }
+        20%, 100% { left: 200%; }
+    }
+
+    .special-gift-button:hover {
+        transform: translateY(-5px) scale(1.02);
+        box-shadow: 0 12px 20px rgba(0, 226, 195, 0.4);
+    }
+
+    .special-gift-button:active {
+        transform: translateY(2px);
+        box-shadow: 0 5px 10px rgba(0, 226, 195, 0.4);
+    }
+
+    .button-icon {
+        font-size: 1.3rem;
+    }
+
+    .button-arrow {
+        margin-left: auto;
+        transition: transform 0.3s ease;
+    }
+
+    .special-gift-button:hover .button-arrow {
+        transform: translateX(5px);
+    }
+
+    .carousel-progress {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: var(--spacing-lg);
+    }
+
+    .progress-step {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 5px;
+        position: relative;
+        z-index: 1;
+    }
+
+    .progress-step .step-icon {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--text-secondary);
+        transition: all 0.3s ease;
+    }
+
+    .progress-step .step-label {
+        font-size: 0.75rem;
+        color: var(--text-secondary);
+        white-space: nowrap;
+    }
+
+    .progress-step.active .step-icon {
+        background: linear-gradient(135deg, var(--accent-blue), var(--accent-turquoise));
+        color: white;
+        box-shadow: 0 0 10px rgba(0, 226, 195, 0.5);
+    }
+
+    .progress-step.active .step-label {
+        color: var(--accent-turquoise);
+        font-weight: 500;
+    }
+
+    .progress-step.completed .step-icon {
+        background: var(--accent-green);
+        color: white;
+    }
+
+    .progress-line {
+        flex: 1;
+        height: 2px;
+        background: rgba(255, 255, 255, 0.1);
+        position: relative;
+        margin: 0 5px;
+    }
+
+    .progress-line::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 0%;
+        background: linear-gradient(90deg, var(--accent-blue), var(--accent-turquoise));
+        transition: width 0.5s ease;
+    }
+
+    .progress-line.active::after {
+        width: 100%;
+    }
+
+    .carousel-container {
+        position: relative;
+        width: 100%;
+        height: 150px;
+        margin: 30px auto;
+        overflow: hidden;
+        border-radius: var(--border-radius-lg);
+        background: rgba(0, 0, 0, 0.2);
+    }
+
+    .carousel-spotlight {
+        position: absolute;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 150px;
+        height: 100%;
+        box-shadow: 0 0 0 999px rgba(0, 0, 0, 0.5);
+        z-index: 1;
+        pointer-events: none;
+        border: 2px solid var(--accent-blue);
+        overflow: hidden;
+    }
+
+    .spotlight-glow {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: radial-gradient(
+            ellipse at center,
+            rgba(0, 226, 195, 0.2) 0%,
+            transparent 70%
+        );
+        animation: spotlight-pulse 2s infinite;
+    }
+
+    @keyframes spotlight-pulse {
+        0%, 100% { opacity: 0.5; transform: scale(1); }
+        50% { opacity: 0.8; transform: scale(1.1); }
+    }
+
+    .carousel-controls {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        z-index: 1;
+        pointer-events: none;
+    }
+
+    .carousel-arrow {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(5px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 1.5rem;
+        cursor: pointer;
+        pointer-events: auto;
+        transition: all 0.3s ease;
+        margin: 0 var(--spacing-md);
+        opacity: 0.6;
+    }
+
+    .carousel-arrow:hover {
+        background: rgba(0, 226, 195, 0.3);
+        transform: scale(1.1);
+        opacity: 1;
+    }
+
+    .next-availability {
+        display: flex;
+        align-items: center;
+        gap: var(--spacing-md);
+        margin-top: var(--spacing-md);
+        padding: var(--spacing-md);
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: var(--border-radius-lg);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .timer-icon {
+        position: relative;
+        width: 36px;
+        height: 36px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+    }
+
+    .timer-icon i {
+        position: absolute;
+        font-size: 1.2rem;
+        color: var(--accent-blue);
+        z-index: 1;
+    }
+
+    .timer-progress {
+        width: 100%;
+        height: 100%;
+        transform: rotate(-90deg);
+    }
+
+    .timer-progress path {
+        fill: none;
+        stroke-width: 3;
+        stroke-linecap: round;
+    }
+
+    .timer-bg {
+        stroke: rgba(255, 255, 255, 0.1);
+    }
+
+    .timer-path {
+        stroke: var(--accent-blue);
+        animation: timer-countdown 60s linear infinite;
+    }
+
+    @keyframes timer-countdown {
+        0% { stroke-dasharray: "100, 100"; }
+        100% { stroke-dasharray: "0, 100"; }
+    }
+
+    .timer-content {
+        flex: 1;
+    }
+
+    .timer-label {
+        font-size: 0.8rem;
+        color: var(--text-secondary);
+        margin-bottom: 2px;
+    }
+
+    .timer-value {
+        font-family: 'JetBrains Mono', monospace;
+        color: var(--accent-blue);
+        font-weight: 600;
+        font-size: 1.1rem;
+    }
+
+    /* Мобильная адаптация */
+    @media (max-width: 768px) {
+        .carousel-header {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: var(--spacing-sm);
+        }
+        
+        .carousel-title h3 {
+            font-size: 1.2rem;
+        }
+        
+        .carousel-info {
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .special-gift-button {
+            max-width: 100%;
+        }
+        
+        .next-availability {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 10px;
+        }
+        
+        .timer-icon {
+            margin: 0 auto;
+        }
+        
+        .timer-content {
+            text-align: center;
+            width: 100%;
+        }
+        
+        .carousel-progress {
+            padding: 0 10px;
+        }
+        
+        .progress-step .step-label {
+            font-size: 0.7rem;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .carousel-container {
+            height: 120px;
+        }
+        
+        .carousel-spotlight {
+            width: 120px;
+        }
+        
+        .progress-step .step-icon {
+            width: 28px;
+            height: 28px;
+            font-size: 0.8rem;
+        }
+        
+        .progress-step .step-label {
+            display: none;
+        }
+        
+        .carousel-arrow {
+            width: 30px;
+            height: 30px;
+            margin: 0 5px;
+            font-size: 1.2rem;
+        }
+    }
+
+    /* Поддержка жестов для мобильной версии */
+    @media (pointer: coarse) {
+        .carousel-container {
+            touch-action: pan-x;
+        }
+        
+        .carousel-track {
+            will-change: transform;
+        }
+        
+        .special-gift-button:active {
+            transform: scale(0.98);
+            transition: transform 0.1s;
+        }
+    }
+    </style>
+
+    <script>
+    // JavaScript для улучшенной 5-дневной карусели подарков с рандомным выбором подарков
+    document.addEventListener('DOMContentLoaded', function() {
+        // Общий пул подарков для обеих каруселей
+        const giftPool = [
+            { 
+                id: 'ref1', 
+                name: '1 реферал', 
+                icon: 'ri-user-add-line', 
+                type: 'common', 
+                weight: 30,
+                message: 'Вы получили 1 свободный реферал для приглашения в вашу команду.' 
+            },
+            { 
+                id: 'ref2', 
+                name: '2 реферала', 
+                icon: 'ri-user-star-line', 
+                type: 'common', 
+                weight: 20,
+                message: 'Вы получили 2 свободных реферала для приглашения в вашу команду.' 
+            },
+            { 
+                id: 'ref3', 
+                name: '3 реферала', 
+                icon: 'ri-team-line', 
+                type: 'common', 
+                weight: 10,
+                message: 'Вы получили 3 свободных реферала для приглашения в вашу команду.' 
+            },
+            { 
+                id: 'plex1', 
+                name: '1 PLEX', 
+                icon: 'ri-coin-line', 
+                type: 'common', 
+                weight: 40,
+                message: 'Вы выиграли 1 PLEX! Токены будут зачислены на ваш баланс.' 
+            },
+            { 
+                id: 'plex2', 
+                name: '2 PLEX', 
+                icon: 'ri-coins-line', 
+                type: 'common', 
+                weight: 30,
+                message: 'Вы выиграли 2 PLEX! Токены будут зачислены на ваш баланс.' 
+            },
+            { 
+                id: 'plex3', 
+                name: '3 PLEX', 
+                icon: 'ri-money-dollar-circle-line', 
+                type: 'common', 
+                weight: 20,
+                message: 'Вы выиграли 3 PLEX! Токены будут зачислены на ваш баланс.' 
+            },
+            { 
+                id: 'usdt10', 
+                name: '10 USDT', 
+                icon: 'ri-secure-payment-line', 
+                type: 'rare', 
+                weight: 2,
+                message: 'Поздравляем! Вы выиграли 10 USDT! Награда будет отправлена на ваш кошелёк.' 
+            },
+            { 
+                id: 'usdt100', 
+                name: '100 USDT', 
+                icon: 'ri-vip-diamond-line', 
+                type: 'rare', 
+                weight: 1,
+                message: 'Невероятно! Вы выиграли 100 USDT! Это очень редкая награда.' 
+            }
+        ];
+
+        // Функция для случайного выбора подарка на основе весов
+        function selectRandomGift() {
+            const totalWeight = giftPool.reduce((sum, gift) => sum + gift.weight, 0);
+            let random = Math.random() * totalWeight;
+            
+            for (let gift of giftPool) {
+                if (random < gift.weight) return gift;
+                random -= gift.weight;
+            }
+            
+            return giftPool[0]; // Запасной вариант на случай ошибки
+        }
+
+        // Функция для заполнения карусели элементами подарков
+        function populateCarouselTrack(trackId) {
+            const track = document.getElementById(trackId);
+            if (!track) return;
+            
+            // Очищаем текущие элементы
+            track.innerHTML = '';
+            
+            // Создаем множество элементов для более плавного эффекта
+            const repeats = 3; // Повторяем пул подарков 3 раза для длинной карусели
+            
+            // Создаем копию пула и перемешиваем для каждого повтора
+            for (let i = 0; i < repeats; i++) {
+                const shuffledPool = [...giftPool].sort(() => Math.random() - 0.5);
+                
+                shuffledPool.forEach(gift => {
+                    const item = document.createElement('div');
+                    item.className = `carousel-item ${gift.type}`;
+                    item.dataset.id = gift.id;
+                    
+                    const icon = document.createElement('div');
+                    icon.className = 'gift-icon';
+                    icon.innerHTML = `<i class="${gift.icon}"></i>`;
+                    
+                    const name = document.createElement('div');
+                    name.className = 'gift-name';
+                    name.textContent = gift.name;
+                    
+                    item.appendChild(icon);
+                    item.appendChild(name);
+                    track.appendChild(item);
+                });
+            }
+        }
+
+        // Функция для анимации прогресс-шагов
+        function updateProgressSteps(step) {
+            const steps = document.querySelectorAll('.five-day-carousel .progress-step');
+            const lines = document.querySelectorAll('.five-day-carousel .progress-line');
+            
+            // Сбрасываем все шаги и линии
+            steps.forEach((s, i) => {
+                s.classList.remove('active', 'completed');
+                if (i < steps.length - 1) {
+                    lines[i].classList.remove('active');
+                }
+            });
+            
+            // Активируем текущий шаг и все предыдущие как завершенные
+            for (let i = 0; i <= step; i++) {
+                if (i < step) {
+                    steps[i].classList.add('completed');
+                    if (i < steps.length - 1) {
+                        lines[i].classList.add('active');
+                    }
+                } else {
+                    steps[i].classList.add('active');
+                }
+            }
+        }
+
+        // Функция для анимации вращения карусели и получения случайного подарка
+        function spinCarousel(trackId, resultContainerId) {
+            const track = document.getElementById(trackId);
+            const resultContainer = document.getElementById(resultContainerId);
+            if (!track || !resultContainer) return;
+            
+            // Выбираем случайный подарок
+            const selectedGift = selectRandomGift();
+            
+            // Находим элементы с ID выбранного подарка
+            const items = track.querySelectorAll(`.carousel-item[data-id="${selectedGift.id}"]`);
+            if (items.length === 0) return;
+            
+            // Выбираем случайный элемент из найденных экземпляров подарка
+            const targetItem = items[Math.floor(Math.random() * items.length)];
+            
+            // Получаем позицию элемента относительно трека
+            const itemRect = targetItem.getBoundingClientRect();
+            const trackRect = track.getBoundingClientRect();
+            const spotlightWidth = 150; // Ширина выделения в пикселях
+            
+            // Вычисляем насколько нужно прокрутить, чтобы подарок оказался в центре
+            const scrollAmount = targetItem.offsetLeft - (track.offsetWidth / 2) + (targetItem.offsetWidth / 2);
+            
+            // Анимация прокрутки с убавлением скорости
+            track.style.transition = 'transform 4s cubic-bezier(0.1, 0.8, 0.2, 1)';
+            track.style.transform = `translateX(-${scrollAmount}px)`;
+            
+            // После завершения прокрутки
+            setTimeout(() => {
+                // Выделяем выбранный элемент
+                targetItem.classList.add('selected-item');
+                
+                // Отображаем результат в контейнере
+                resultContainer.innerHTML = `
+                    <div class="gift-result ${selectedGift.type === 'rare' ? 'gift-result-rare' : 'gift-result-common'}">
+                        <div class="gift-result-icon">
+                            <i class="${selectedGift.icon}"></i>
+                        </div>
+                        <div class="gift-result-title">${selectedGift.name}</div>
+                        <div class="gift-result-message">${selectedGift.message}</div>
+                        <div class="gift-result-badge">${selectedGift.type === 'rare' ? 'РЕДКИЙ ПРИЗ!' : 'ПРИЗ!'}</div>
+                    </div>
+                `;
+                resultContainer.classList.add('show');
+                
+                // Обновляем прогресс до шага "Приз"
+                updateProgressSteps(2);
+                
+                // Добавляем эффекты для редких подарков
+                if (selectedGift.type === 'rare') {
+                    // Если функция создания конфетти доступна
+                    if (typeof createConfetti === 'function') {
+                        createConfetti();
+                    } else if (typeof launchConfetti === 'function') {
+                        launchConfetti();
+                    }
+                    
+                    // Если функция уведомлений доступна
+                    if (typeof showNotification === 'function') {
+                        showNotification('Поздравляем! Вы получили редкий подарок!', 'success');
+                    }
+                }
+            }, 4000);
+        }
+
+        // Улучшенное поведение карусели с поддержкой свайпов для мобильных устройств
+        const fiveDayContainer = document.getElementById('fiveDayGiftCarouselBox');
+        const fiveDayTrack = document.getElementById('fiveDayGiftTrack');
+        
+        if (fiveDayContainer && fiveDayTrack) {
+            let startX, startScrollLeft, isDragging = false;
+            
+            // Обработчики мыши
+            fiveDayContainer.addEventListener('mousedown', function(e) {
+                isDragging = true;
+                startX = e.pageX;
+                startScrollLeft = fiveDayTrack.scrollLeft;
+                fiveDayContainer.style.cursor = 'grabbing';
+            });
+            
+            fiveDayContainer.addEventListener('mousemove', function(e) {
+                if (!isDragging) return;
+                const x = e.pageX;
+                const walk = (x - startX) * 2;
+                fiveDayTrack.scrollLeft = startScrollLeft - walk;
+            });
+            
+            fiveDayContainer.addEventListener('mouseup', function() {
+                isDragging = false;
+                fiveDayContainer.style.cursor = 'grab';
+            });
+            
+            fiveDayContainer.addEventListener('mouseleave', function() {
+                isDragging = false;
+                fiveDayContainer.style.cursor = 'grab';
+            });
+            
+            // Обработчики тачскрина
+            fiveDayContainer.addEventListener('touchstart', function(e) {
+                isDragging = true;
+                startX = e.touches[0].pageX;
+                startScrollLeft = fiveDayTrack.scrollLeft;
+            }, { passive: true });
+            
+            fiveDayContainer.addEventListener('touchmove', function(e) {
+                if (!isDragging) return;
+                const x = e.touches[0].pageX;
+                const walk = (x - startX) * 2;
+                fiveDayTrack.scrollLeft = startScrollLeft - walk;
+            }, { passive: true });
+            
+            fiveDayContainer.addEventListener('touchend', function() {
+                isDragging = false;
+            });
+        }
+        
+        // Добавляем анимацию к кнопке и обработчик событий
+        const fiveDayButton = document.getElementById('fiveDayGiftButton');
+        const fiveDayGiftContainer = document.getElementById('fiveDayGiftContainer');
+        
+        if (fiveDayButton) {
+            fiveDayButton.addEventListener('click', function() {
+                // Показываем контейнер с анимацией
+                if (fiveDayGiftContainer) {
+                    fiveDayGiftContainer.style.display = 'block';
+                    fiveDayGiftContainer.classList.add('fade-in');
+                    
+                    // Отключаем кнопку на время анимации
+                    this.disabled = true;
+                    this.classList.add('button-disabled');
+                    
+                    // Заполняем карусель перед запуском
+                    populateCarouselTrack('fiveDayGiftTrack');
+                    
+                    // Показываем первый шаг прогресса
+                    updateProgressSteps(0);
+                    
+                    // Через время показываем второй шаг (вращение карусели)
+                    setTimeout(() => {
+                        updateProgressSteps(1);
+                        
+                        // Запускаем анимацию карусели с рандомным подарком
+                        spinCarousel('fiveDayGiftTrack', 'fiveDayGiftResult');
+                        
+                    }, 1500);
+                    
+                    // Восстанавливаем кнопку через некоторое время
+                    setTimeout(() => {
+                        this.disabled = false;
+                        this.classList.remove('button-disabled');
+                    }, 7000);
+                }
+            });
+        }
+        
+        // Анимируем таймер обратного отсчета
+        function updateFiveDayTimerAnimation() {
+            const timerPath = document.querySelector('.five-day-carousel .timer-path');
+            
+            // Текущее время в процентах прошедшего 5-дневного периода (для демо)
+            const currentPercent = 80; // 80% времени прошло
+            
+            if (timerPath) {
+                timerPath.setAttribute('stroke-dasharray', `${currentPercent}, 100`);
+            }
+        }
+        
+        // Инициализация таймера
+        updateFiveDayTimerAnimation();
+        
+        // Стрелки карусели
+        document.querySelectorAll('.five-day-carousel .carousel-arrow').forEach(arrow => {
+            arrow.addEventListener('click', function() {
+                const isLeft = this.classList.contains('left');
+                const container = document.getElementById('fiveDayGiftCarouselBox');
+                
+                if (container) {
+                    const track = container.querySelector('.carousel-track');
+                    const scrollAmount = isLeft ? -150 : 150;
+                    
+                    track.scrollBy({
+                        left: scrollAmount,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Аналогичная функциональность для субботней карусели
+        // Для согласованности функциональности между всеми каруселями
+        const saturdayButton = document.getElementById('saturdayGiftButton');
+        if (saturdayButton) {
+            saturdayButton.addEventListener('click', function() {
+                // Добавим популяцию трека для субботней карусели
+                populateCarouselTrack('saturdayGiftTrack');
+                
+                // Показываем контейнер
+                const container = document.getElementById('saturdayGiftContainer');
+                if (container) {
+                    container.style.display = 'block';
+                }
+                
+                // Отключаем кнопку
+                this.disabled = true;
+                
+                // Запускаем анимацию карусели с рандомным подарком
+                setTimeout(() => {
+                    spinCarousel('saturdayGiftTrack', 'saturdayGiftResult');
+                }, 500);
+                
+                // Восстанавливаем кнопку
+                setTimeout(() => {
+                    this.disabled = false;
+                }, 6000);
+            });
+        }
+    });
+    </script>
+    <div class="gift-balances">
+        <div class="gift-balance-item">
+            <span class="balance-label">Баланс ежедневной карусели:</span>
+            <span class="balance-value">25 PLEX</span>
+        </div>
+        <div class="gift-balance-item">
+            <span class="balance-label">Баланс 5-дневной карусели:</span>
+            <span class="balance-value">100 PLEX</span>
+        </div>
+        <div class="gift-balance-item">
+            <span class="balance-label">Баланс субботней карусели:</span>
+            <span class="balance-value">250 PLEX</span>
+        </div>
+    </div>
+
+    <!-- Раздел "5-дневная карусель подарков" -->
+    <div class="gift-carousel five-day-carousel">
+        <div class="demo-badge">ДЕМО РЕЖИМ</div>
+        <h3>5-дневная карусель подарков</h3>
+        <p>В обычном режиме доступна раз в 5 дней. В демо-версии доступна бесплатно!</p>
+        
+        <button id="fiveDayGiftButton" class="special-gift-button"></button>
+            <i class="ri-gift-2-line"></i> Получить подарок
+        </button>
+        
+        <div id="fiveDayGiftContainer" style="display:none;">
+            <div id="fiveDayGiftCarouselBox" class="carousel-container">
+                <div class="carousel-track" id="fiveDayGiftTrack">
+                    <!-- Содержимое карусели добавляется через JavaScript -->
+                </div>
+                <div class="carousel-spotlight"></div>
+            </div>
+            <div id="fiveDayGiftResult" class="gift-result-container"></div>
+        </div>
+        
+        <div class="next-availability"></div>
+            <i class="ri-time-line"></i> В стандартном режиме будет доступна через: <span id="fiveDayCountdown">5 дн. 00:00:00</span>
+        </div>
+    </div>
+
+    <!-- Раздел "Субботняя карусель подарков" -->
+    <div class="gift-carousel saturday-carousel">
+        <div class="demo-badge special">ДЕМО РЕЖИМ</div>
+        <h3>Субботняя карусель подарков</h3>
+        <p>В обычном режиме доступна только по субботам. В демо-версии доступна бесплатно!</p>
+        
+        <button id="saturdayGiftButton" class="premium-gift-button">
+            <i class="ri-magic-line"></i> Получить подарок
+        </button>
+        
+        <div id="saturdayGiftContainer" style="display:none;">
+            <div id="saturdayGiftCarouselBox" class="carousel-container">
+                <div class="carousel-track" id="saturdayGiftTrack">
+                    <!-- Содержимое карусели добавляется через JavaScript -->
+                </div>
+                <div class="carousel-spotlight"></div>
+            </div>
+            <div id="saturdayGiftResult" class="gift-result-container"></div>
+        </div>
+        
+        <div class="next-availability">
+            <i class="ri-calendar-event-line"></i> В стандартном режиме будет доступна: <span id="saturdayCountdown">Каждую субботу</span>
+        </div>
+    </div>
+
+    <style>
+    /* Стили для демо-режима и новых каруселей подарков */
+    .gift-balances {
+        background: rgba(255,255,255,0.05);
+        border-radius: var(--border-radius-lg);
+        padding: var(--spacing-md);
+        margin-bottom: var(--spacing-lg);
+    }
+
+    .gift-balance-item {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: var(--spacing-sm);
+        padding-bottom: var(--spacing-sm);
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .gift-balance-item:last-child {
+        margin-bottom: 0;
+        padding-bottom: 0;
+        border-bottom: none;
+    }
+
+    .balance-label {
+        color: var(--text-secondary);
+    }
+
+    .balance-value {
+        font-weight: 600;
+        color: var(--accent-blue);
+    }
+
+    .five-day-carousel, .saturday-carousel {
+        position: relative;
+        margin-top: var(--spacing-xl);
+    }
+
+    .five-day-carousel {
+        background: linear-gradient(to right, rgba(45,127,249,0.15), rgba(0,226,195,0.15));
+        border: 1px solid rgba(45,127,249,0.3);
+    }
+
+    .saturday-carousel {
+        background: linear-gradient(to right, rgba(156,95,255,0.15), rgba(255,59,154,0.15));
+        border: 1px solid rgba(156,95,255,0.3);
+    }
+
+    .demo-badge {
+        position: absolute;
+        top: -12px;
+        right: 20px;
+        background: var(--accent-yellow);
+        color: #000;
+        padding: 4px 12px;
+        border-radius: 15px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        box-shadow: 0 4px 8px rgba(255, 204, 0, 0.3);
+        animation: demo-pulse 2s infinite;
+        z-index: 2;
+    }
+
+    .demo-badge.special {
+        background: var(--accent-purple);
+        color: white;
+        box-shadow: 0 4px 8px rgba(156, 95, 255, 0.3);
+    }
+
+    @keyframes demo-pulse {
+        0%, 100% { transform: scale(1); }
+        50% { transform: scale(1.05); }
+    }
+
+    .special-gift-button {
+        background: linear-gradient(45deg, var(--accent-blue), var(--accent-turquoise)) !important;
+        max-width: 250px !important;
+        margin: 0 auto;
+    }
+
+    .premium-gift-button {
+        background: linear-gradient(45deg, var(--accent-purple), var(--accent-magenta)) !important;
+        max-width: 250px !important;
+        margin: 0 auto;
+    }
+
+    .next-availability {
+        margin-top: var(--spacing-md);
+        padding: var(--spacing-sm);
+        background: rgba(255,255,255,0.05);
+        border-radius: var(--border-radius-lg);
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 0.9rem;
+        color: var(--text-secondary);
+    }
+
+    #fiveDayCountdown, #saturdayCountdown {
+        font-family: 'JetBrains Mono', monospace;
+        color: var(--text-primary);
+    }
+
+    /* Улучшенные стили для каруселей подарков */
+    .carousel-container {
+        position: relative;
+        width: 100%;
+        height: 150px;
+        margin: 30px auto;
+        overflow: hidden;
+        border-radius: var(--border-radius-lg);
+        background: rgba(0, 0, 0, 0.2);
+    }
+
+    .carousel-track {
+        display: flex;
+        position: relative;
+        height: 100%;
+        transition: transform 0.5s cubic-bezier(0.21, 0.53, 0.29, 0.99);
+    }
+
+    .carousel-item {
+        min-width: 150px;
+        height: 150px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 15px;
+        box-sizing: border-box;
+        background: rgba(255, 255, 255, 0.05);
+        border: 2px solid transparent;
+        transition: all 0.3s ease;
+        position: relative;
+    }
+
+    .carousel-item.common {
+        background: linear-gradient(135deg, rgba(45,127,249,0.1), rgba(0,226,195,0.1));
+    }
+
+    .carousel-item.rare {
+        background: linear-gradient(135deg, rgba(156,95,255,0.1), rgba(255,59,154,0.1));
+    }
+
+    .gift-icon {
+        width: 60px;
+        height: 60px;
+        border-radius: 30%;
+        margin-bottom: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2rem;
+        background: rgba(255, 255, 255, 0.1);
+        box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .common .gift-icon {
+        background: linear-gradient(135deg, var(--accent-blue), var(--accent-turquoise));
+        color: white;
+    }
+
+    .rare .gift-icon {
+        background: linear-gradient(135deg, var(--accent-purple), var(--accent-magenta));
+        color: white;
+    }
+
+    .gift-icon::after {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: linear-gradient(transparent, rgba(255, 255, 255, 0.3), transparent);
+        transform: rotate(45deg);
+        animation: shine 3s infinite;
+    }
+
+    .gift-name {
+        font-size: 0.9rem;
+        font-weight: 500;
+        text-align: center;
+        color: var(--text-primary);
+    }
+
+    .rare .gift-name {
+        color: var(--accent-magenta);
+        font-weight: 600;
+        text-shadow: 0 0 10px rgba(255, 59, 154, 0.3);
+    }
+
+    .carousel-spotlight {
+        position: absolute;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 150px;
+        height: 100%;
+        box-shadow: 0 0 0 999px rgba(0, 0, 0, 0.5);
+        z-index: 1;
+        pointer-events: none;
+        border: 2px solid var(--accent-blue);
+    }
+
+    .saturday-carousel .carousel-spotlight {
+        border-color: var(--accent-purple);
+    }
+
+    .selected-item {
+        transform: scale(1.05);
+        z-index: 2;
+    }
+
+    .common.selected-item {
+        border-color: var(--accent-turquoise);
+        box-shadow: 0 0 20px rgba(0, 226, 195, 0.5);
+    }
+
+    .rare.selected-item {
+        border-color: var(--accent-magenta);
+        box-shadow: 0 0 20px rgba(255, 59, 154, 0.5);
+    }
+
+    .gift-result-container {
+        padding: 20px;
+        margin-top: 20px;
+        text-align: center;
+        border-radius: var(--border-radius-lg);
+        opacity: 0;
+        transform: translateY(20px);
+        transition: all 0.5s ease;
+    }
+
+    .gift-result-container.show {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    .gift-result {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .gift-result-icon {
+        width: 80px;
+        height: 80px;
+        border-radius: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2.5rem;
+        position: relative;
+    }
+
+    .gift-result-common .gift-result-icon {
+        background: linear-gradient(135deg, var(--accent-blue), var(--accent-turquoise));
+        box-shadow: 0 5px 20px rgba(0, 226, 195, 0.4);
+        color: white;
+    }
+
+    .gift-result-rare .gift-result-icon {
+        background: linear-gradient(135deg, var(--accent-purple), var(--accent-magenta));
+        box-shadow: 0 5px 20px rgba(255, 59, 154, 0.4);
+        animation: pulse-glow 2s infinite;
+        color: white;
+    }
+
+    .gift-result-title {
+        font-size: 1.5rem;
+        font-weight: 600;
+    }
+
+    .gift-result-common .gift-result-title {
+        color: var(--accent-blue);
+    }
+
+    .gift-result-rare .gift-result-title {
+        color: var(--accent-magenta);
+        text-shadow: 0 0 10px rgba(255, 59, 154, 0.3);
+    }
+
+    .gift-result-message {
+        font-size: 1rem;
+        color: var(--text-secondary);
+    }
+
+    .gift-result-badge {
+        padding: 5px 15px;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: 600;
+    }
+
+    .gift-result-common .gift-result-badge {
+        background: rgba(0, 226, 195, 0.2);
+        color: var(--accent-turquoise);
+    }
+
+    .gift-result-rare .gift-result-badge {
+        background: rgba(255, 59, 154, 0.2);
+        color: var(--accent-magenta);
+    }
+
+    .gift-image {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        z-index: 1;
+    }
+
+    @keyframes shine {
+        0% { transform: translateX(-100%) rotate(45deg); }
+        20%, 100% { transform: translateX(100%) rotate(45deg); }
+    }
+
+    @keyframes pulse-glow {
+        0%, 100% { box-shadow: 0 5px 20px rgba(255, 59, 154, 0.4); }
+        50% { box-shadow: 0 5px 30px rgba(255, 59, 154, 0.7); }
+    }
+
+    .prize-celebration {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 9999;
+    }
+
+    .confetti {
+        position: absolute;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        animation: confetti-fall 5s ease-out forwards;
+    }
+
+    @keyframes confetti-fall {
+        0% { transform: translateY(-50px) rotate(0deg); opacity: 1; }
+        80% { opacity: 1; }
+        100% { transform: translateY(105vh) rotate(720deg); opacity: 0; }
+    }
+    </style>
+
+    <!-- JavaScript для новых каруселей -->
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Общий пул подарков для всех карусель-лотерей
+        const giftPool = [
+            { 
+                id: 'ref1', 
+                name: '1 реферал', 
+                icon: 'ri-user-add-line', 
+                type: 'common', 
+                weight: 30,
+                message: 'Вы получили 1 свободный реферал для приглашения в вашу команду.' 
+            },
+            { 
+                id: 'ref2', 
+                name: '2 реферала', 
+                icon: 'ri-user-star-line', 
+                type: 'common', 
+                weight: 20,
+                message: 'Вы получили 2 свободных реферала для приглашения в вашу команду.' 
+            },
+            { 
+                id: 'ref3', 
+                name: '3 реферала', 
+                icon: 'ri-team-line', 
+                type: 'common', 
+                weight: 10,
+                message: 'Вы получили 3 свободных реферала для приглашения в вашу команду.' 
+            },
+            { 
+                id: 'plex1', 
+                name: '1 PLEX', 
+                icon: 'ri-coin-line', 
+                type: 'common', 
+                weight: 40,
+                message: 'Вы выиграли 1 PLEX! Токены будут зачислены на ваш баланс.' 
+            },
+            { 
+                id: 'plex2', 
+                name: '2 PLEX', 
+                icon: 'ri-coins-line', 
+                type: 'common', 
+                weight: 30,
+                message: 'Вы выиграли 2 PLEX! Токены будут зачислены на ваш баланс.' 
+            },
+            { 
+                id: 'plex3', 
+                name: '3 PLEX', 
+                icon: 'ri-money-dollar-circle-line', 
+                type: 'common', 
+                weight: 20,
+                message: 'Вы выиграли 3 PLEX! Токены будут зачислены на ваш баланс.' 
+            },
+            { 
+                id: 'usdt10', 
+                name: '10 USDT', 
+                icon: 'ri-secure-payment-line', 
+                type: 'rare', 
+                weight: 2,
+                message: 'Поздравляем! Вы выиграли 10 USDT! Награда будет отправлена на ваш кошелёк.' 
+            },
+            { 
+                id: 'usdt100', 
+                name: '100 USDT', 
+                icon: 'ri-vip-diamond-line', 
+                type: 'rare', 
+                weight: 1,
+                message: 'Невероятно! Вы выиграли 100 USDT! Это очень редкая награда.' 
+            }
+        ];
+
+        // Настройка карусели для 5-дневного розыгрыша
+        setupCarousel('fiveDayGiftButton', 'fiveDayGiftContainer', 'fiveDayGiftTrack', 'fiveDayGiftResult', giftPool);
+
+        // Настройка карусели для субботнего розыгрыша
+        setupCarousel('saturdayGiftButton', 'saturdayGiftContainer', 'saturdayGiftTrack', 'saturdayGiftResult', giftPool);
+
+        // Обновление таймеров
+        updateFiveDayCountdown();
+        updateSaturdayCountdown();
+        
+        // Интервал обновления таймеров каждую секунду
+        setInterval(function() {
+            updateFiveDayCountdown();
+            updateSaturdayCountdown();
+        }, 1000);
+    });
+
+    function setupCarousel(buttonId, containerId, trackId, resultId, giftPool) {
+        const button = document.getElementById(buttonId);
+        const container = document.getElementById(containerId);
+        const track = document.getElementById(trackId);
+        const resultContainer = document.getElementById(resultId);
+        
+        // Создаем элементы карусели
+        populateCarousel(track, giftPool);
+        
+        // Обработчик нажатия кнопки
+        button.addEventListener('click', function() {
+            // Показываем контейнер
+            container.style.display = 'block';
+            
+            // Отключаем кнопку на время анимации
+            button.disabled = true;
+            
+            // Запускаем анимацию карусели
+            setTimeout(() => {
+                spinCarousel(track, giftPool, resultContainer, button);
+            }, 100);
+        });
+    }
+
+    function populateCarousel(track, giftPool) {
+        // Создаем элементы для карусели
+        // Добавляем копии для более плавного вращения
+        const items = [...giftPool, ...giftPool, ...giftPool];
+        
+        track.innerHTML = '';
+        items.forEach(gift => {
+            const item = document.createElement('div');
+            item.className = `carousel-item ${gift.type}`;
+            item.dataset.id = gift.id;
+            
+            const icon = document.createElement('div');
+            icon.className = 'gift-icon';
+            icon.innerHTML = `<i class="${gift.icon}"></i>`;
+            
+            const name = document.createElement('div');
+            name.className = 'gift-name';
+            name.textContent = gift.name;
+            
+            item.appendChild(icon);
+            item.appendChild(name);
+            track.appendChild(item);
+        });
+    }
+
+    function spinCarousel(track, giftPool, resultContainer, button) {
+        const items = track.querySelectorAll('.carousel-item');
+        const itemWidth = 150;
+        const spinDuration = 5000; // 5 секунд
+        const itemCount = items.length;
+        
+        // Вычисляем победителя по вероятности
+        const winner = selectWinningGift(giftPool);
+        
+        // Находим индексы всех вхождений победителя в карусели
+        const winnerIndices = [];
+        items.forEach((item, index) => {
+            if (item.dataset.id === winner.id) {
+                winnerIndices.push(index);
+            }
+        });
+        
+        // Выбираем случайный индекс из найденных
+        const targetIndex = winnerIndices[Math.floor(Math.random() * winnerIndices.length)];
+        
+        // Вычисляем, насколько нужно прокрутить, чтобы победитель оказался в центре
+        const centerPosition = Math.floor(track.offsetWidth / 2);
+        const targetOffset = targetIndex * itemWidth;
+        const scrollAmount = targetOffset - centerPosition + itemWidth / 2;
+        
+        // Анимация прокрутки
+        track.style.transition = `transform ${spinDuration / 1000}s cubic-bezier(0.1, 0.7, 0.1, 1)`;
+        track.style.transform = `translateX(-${scrollAmount}px)`;
+        
+        // После завершения анимации
+        setTimeout(() => {
+            // Выделяем победителя
+            items[targetIndex].classList.add('selected-item');
+            
+            // Отображаем результат
+            showResult(resultContainer, winner);
+            
+            // Создаем эффект конфетти
+            if (winner.type === 'rare') {
+                createConfetti();
+            }
+            
+            // Восстанавливаем кнопку через некоторое время
+            setTimeout(() => {
+                button.disabled = false;
+            }, 2000);
+        }, spinDuration);
+    }
+
+    function selectWinningGift(giftPool) {
+        const totalWeight = giftPool.reduce((sum, gift) => sum + gift.weight, 0);
+        let random = Math.random() * totalWeight;
+        
+        for (let gift of giftPool) {
+            if (random < gift.weight) return gift;
+            random -= gift.weight;
+        }
+        
+        return giftPool[giftPool.length - 1];
+    }
+
+    function showResult(container, gift) {
+        const resultClass = gift.type === 'rare' ? 'gift-result-rare' : 'gift-result-common';
+        const badgeText = gift.type === 'rare' ? 'РЕДКИЙ ПРИЗ!' : 'ПРИЗ!';
+        
+        container.innerHTML = `
+            <div class="gift-result ${resultClass}">
+                <div class="gift-result-icon">
+                    <i class="${gift.icon}"></i>
+                </div>
+                <div class="gift-result-title">${gift.name}</div>
+                <div class="gift-result-message">${gift.message}</div>
+                <div class="gift-result-badge">${badgeText}</div>
+            </div>
+        `;
+        
+        container.classList.add('show');
+        
+        // Показываем уведомление
+        if (window.showNotification) {
+            const type = gift.type === 'rare' ? 'success' : 'info';
+            window.showNotification(`Вы выиграли ${gift.name}!`, type, 5000);
+        }
+    }
+
+    function createConfetti() {
+        const celebration = document.createElement('div');
+        celebration.className = 'prize-celebration';
+        document.body.appendChild(celebration);
+        
+        const colors = ['#FF3B9A', '#9C5FFF', '#2D7FF9', '#00E2C3', '#4CD964', '#FFCC00'];
+        
+        for (let i = 0; i < 100; i++) {
+            setTimeout(() => {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = `${Math.random() * 100}%`;
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.animationDuration = `${Math.random() * 3 + 2}s`;
+                celebration.appendChild(confetti);
+            }, i * 20);
+        }
+        
+        setTimeout(() => {
+            celebration.remove();
+        }, 6000);
+    }
+
+    function updateFiveDayCountdown() {
+        const countdownElement = document.getElementById('fiveDayCountdown');
+        
+        // В реальной версии здесь должна быть логика определения следующей доступности
+        // Для демо-версии просто показываем фиксированное время
+        const days = 5;
+        const hours = 0;
+        const minutes = 0;
+        const seconds = 0;
+        
+        countdownElement.textContent = `${days} дн. ${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+    }
+
+    function updateSaturdayCountdown() {
+        const countdownElement = document.getElementById('saturdayCountdown');
+        
+        // В реальной версии здесь можно вычислить дату следующей субботы
+        // Для демо оставляем фиксированный текст
+        countdownElement.textContent = 'Каждую субботу';
+    }
+    </script>
       <!-- Раздел "Добровольная карусель подарков" -->
       <div class="gift-carousel">
         <h3>Добровольная карусель подарков</h3>
@@ -1106,106 +2970,1649 @@
         </div>
       </div>
 
-      <!-- Тестовый уровень (расположен сразу под каруселью подарков) -->
-      <div id="test-level-section">
+    <!-- Тестовый уровень с улучшенным UX -->
+    <div id="test-level-section">
+        <div class="level-badge">Демо-режим</div>
+        
+        <!-- Улучшенная шапка с иконкой и лучшим визуальным представлением -->
         <div id="test-level-header">
-          <div id="test-level-title">Тестовый уровень (Мониторинг BNB)</div>
-          <button id="startTestLevelBtn" style="background: var(--accent-purple); border: none; padding: var(--spacing-sm) var(--spacing-md); border-radius: var(--border-radius-lg); cursor: pointer;">
-            Начать мониторинг
-          </button>
+            <div class="level-title-group">
+                <div class="level-icon pulse-light">
+                    <i class="ri-radar-line"></i>
+                </div>
+                <div>
+                    <div id="test-level-title">Тестовый уровень</div>
+                    <div class="level-subtitle">Мониторинг транзакций BNB</div>
+                </div>
+            </div>
+            
+            <button id="startTestLevelBtn" class="monitor-button">
+                <i class="ri-play-circle-line"></i>
+                <span>Начать мониторинг</span>
+            </button>
         </div>
-        <p style="font-size:0.9rem; color: var(--text-secondary);">
-          Здесь отображаются транзакции в BNB с нашего системного кошелька <strong>${systemWallet}</strong> на ваш кошелёк.
-        </p>
-        <div id="testLevelProgressContainer">
-          <div id="testLevelProgressBar"></div>
+        
+        <!-- Улучшенное описание с информационной подсказкой -->
+        <div class="level-description">
+            <i class="ri-information-line info-icon"></i>
+            <p>Отслеживает транзакции в BNB с системного кошелька на ваш адрес. Достигните 100% для завершения уровня.</p>
+            <div class="tooltip">Это демонстрационный режим для знакомства с платформой</div>
         </div>
-        <div id="testLevelStatus"></div>
-        <div id="testLevelTxList"></div>
-      </div>
+        
+        <!-- Улучшенный контейнер прогресса с процентами и визуальными индикаторами -->
+        <div class="level-progress-wrapper">
+            <div class="progress-labels">
+                <span class="progress-label">Прогресс выполнения</span>
+                <span class="progress-percentage" id="testLevelPercentage">0%</span>
+            </div>
+            
+            <div id="testLevelProgressContainer">
+                <div id="testLevelProgressBar"></div>
+                
+                <!-- Маркеры прогресса -->
+                <div class="progress-markers">
+                    <div class="marker" style="left: 25%" data-percentage="25%"></div>
+                    <div class="marker" style="left: 50%" data-percentage="50%"></div>
+                    <div class="marker" style="left: 75%" data-percentage="75%"></div>
+                    <div class="marker" style="left: 100%" data-percentage="100%"></div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Улучшенный индикатор статуса с информационными значками -->
+        <div class="status-container">
+            <div id="testLevelStatus">Мониторинг не запущен</div>
+            <div class="system-wallet-info">
+                <span>Системный адрес:</span>
+                <div class="wallet-address">
+                    <code id="systemWalletDisplay">0x49eE383c6Ab984810B1BBD7726d6484fA41aA86e</code>
+                    <button class="copy-btn" id="copySystemWalletBtn" title="Скопировать адрес">
+                        <i class="ri-file-copy-line"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Улучшенный список транзакций с анимацией и визуальными улучшениями -->
+        <div class="tx-list-container">
+            <div class="tx-list-header">
+                <h4>История транзакций</h4>
+                <span class="tx-counter" id="txCounter">0</span>
+            </div>
+            
+            <div id="testLevelTxList" class="animated-list">
+                <!-- Placeholder для пустого состояния -->
+                <div class="empty-tx-state">
+                    <div class="empty-icon"><i class="ri-file-list-3-line"></i></div>
+                    <p>Транзакции появятся здесь после запуска мониторинга</p>
+                    <span class="empty-hint">Нажмите "Начать мониторинг" для запуска</span>
+                </div>
+            </div>
+        </div>
+    </div>
 
-      <!-- Потоки (закрашены серым) -->
-      <div class="streams-container">
-        <h3>Потоки</h3>
+    <style>
+        /* Стили для улучшенного раздела тестового уровня */
+        #test-level-section {
+            position: relative;
+            background: linear-gradient(to right, rgba(45,127,249,0.05), rgba(156,95,255,0.05));
+            border: 1px solid rgba(156,95,255,0.2);
+            border-radius: var(--border-radius-lg);
+            padding: var(--spacing-lg);
+            margin: var(--spacing-xl) 0;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        #test-level-section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+            border-color: rgba(156,95,255,0.4);
+        }
+        
+        .level-badge {
+            position: absolute;
+            top: -10px;
+            right: 20px;
+            background: var(--accent-purple);
+            color: white;
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 4px 12px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(156,95,255,0.3);
+            z-index: 1;
+        }
+        
+        /* Улучшенная шапка */
+        #test-level-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--spacing-md);
+            flex-wrap: wrap;
+            gap: var(--spacing-sm);
+        }
+        
+        .level-title-group {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+        }
+        
+        .level-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .pulse-light::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0) 70%);
+            opacity: 0;
+            animation: pulse-radar 2s infinite;
+        }
+        
+        @keyframes pulse-radar {
+            0%, 100% { opacity: 0; transform: scale(0.5); }
+            50% { opacity: 0.4; transform: scale(1.2); }
+        }
+        
+        #test-level-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 2px;
+        }
+        
+        .level-subtitle {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+        
+        /* Кнопка мониторинга */
+        .monitor-button {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--accent-purple);
+            color: white;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(156,95,255,0.2);
+        }
+        
+        .monitor-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(156,95,255,0.4);
+        }
+        
+        .monitor-button.active {
+            background: var(--accent-red);
+        }
+        
+        .monitor-button.active:hover {
+            background: #e63946;
+        }
+        
+        /* Описание уровня */
+        .level-description {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            margin-bottom: var(--spacing-md);
+            padding: var(--spacing-sm);
+            background: rgba(255,255,255,0.03);
+            border-radius: 8px;
+            border-left: 3px solid var(--accent-blue);
+            position: relative;
+        }
+        
+        .info-icon {
+            color: var(--accent-blue);
+            font-size: 1.1rem;
+            margin-top: 2px;
+        }
+        
+        .level-description p {
+            margin: 0;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+        
+        .level-description:hover .tooltip {
+            opacity: 1;
+            transform: translateY(0);
+            visibility: visible;
+        }
+        
+        .tooltip {
+            position: absolute;
+            bottom: calc(100% + 10px);
+            left: 20px;
+            background: var(--bg-card);
+            padding: 8px 12px;
+            border-radius: 6px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            font-size: 0.8rem;
+            color: var(--text-primary);
+            z-index: 2;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+            transition: all 0.3s ease;
+        }
+        
+        .tooltip:after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            left: 20px;
+            border: 6px solid transparent;
+            border-top-color: var(--bg-card);
+        }
+        
+        /* Индикатор прогресса */
+        .level-progress-wrapper {
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .progress-labels {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 6px;
+        }
+        
+        .progress-label {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+        
+        .progress-percentage {
+            font-weight: 600;
+            font-size: 0.8rem;
+            color: var(--accent-purple);
+        }
+        
+        #testLevelProgressContainer {
+            background: rgba(255,255,255,0.08);
+            border-radius: 8px;
+            height: 10px;
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 15px;
+        }
+        
+        #testLevelProgressBar {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, var(--accent-blue), var(--accent-purple));
+            border-radius: 8px;
+            transition: width 1.5s cubic-bezier(0.22, 1, 0.36, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        #testLevelProgressBar:after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, 
+                                                                transparent 0%, 
+                                                                rgba(255, 255, 255, 0.2) 50%, 
+                                                                transparent 100%);
+            transform: translateX(-100%);
+            animation: progress-shine 2s infinite;
+        }
+        
+        @keyframes progress-shine {
+            100% { transform: translateX(100%); }
+        }
+        
+        .progress-markers {
+            position: relative;
+            height: 15px;
+        }
+        
+        .marker {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background: rgba(255,255,255,0.3);
+            border-radius: 50%;
+            top: 0;
+            transform: translateX(-50%);
+        }
+        
+        .marker:before {
+            content: attr(data-percentage);
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.7rem;
+            color: var(--text-tertiary);
+            white-space: nowrap;
+        }
+        
+        .marker.reached {
+            background: var(--accent-green);
+        }
+        
+        /* Статус контейнер */
+        .status-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--spacing-md);
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        #testLevelStatus {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 12px;
+            border-radius: 20px;
+            background: rgba(255,255,255,0.05);
+        }
+        
+        .system-wallet-info {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+        
+        .wallet-address {
+            display: flex;
+            align-items: center;
+            background: rgba(255,255,255,0.05);
+            border-radius: 4px;
+            padding: 4px 8px;
+            max-width: 200px;
+            overflow: hidden;
+        }
+        
+        .wallet-address code {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            color: var(--accent-blue);
+        }
+        
+        .copy-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            cursor: pointer;
+            font-size: 0.9rem;
+            padding: 2px;
+            margin-left: 4px;
+            transition: all 0.3s ease;
+        }
+        
+        .copy-btn:hover {
+            color: var(--text-primary);
+        }
+        
+        /* Список транзакций */
+        .tx-list-container {
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: var(--border-radius-lg);
+            overflow: hidden;
+        }
+        
+        .tx-list-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: var(--spacing-sm) var(--spacing-md);
+            background: rgba(255,255,255,0.05);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .tx-list-header h4 {
+            margin: 0;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+        
+        .tx-counter {
+            background: var(--accent-purple);
+            color: white;
+            font-size: 0.7rem;
+            font-weight: 600;
+            padding: 2px 8px;
+            border-radius: 10px;
+        }
+        
+        #testLevelTxList {
+            max-height: 250px;
+            overflow-y: auto;
+            padding: var(--spacing-sm);
+        }
+        
+        .animated-list .tx-item {
+            animation: slide-in 0.3s ease forwards;
+            opacity: 0;
+            transform: translateY(10px);
+        }
+        
+        @keyframes slide-in {
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .empty-tx-state {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: var(--spacing-xl);
+            color: var(--text-tertiary);
+        }
+        
+        .empty-icon {
+            font-size: 2.5rem;
+            margin-bottom: var(--spacing-sm);
+            opacity: 0.5;
+        }
+        
+        .empty-tx-state p {
+            margin: 0 0 var(--spacing-sm);
+            text-align: center;
+        }
+        
+        .empty-hint {
+            font-size: 0.8rem;
+            background: rgba(156,95,255,0.1);
+            padding: 4px 12px;
+            border-radius: 12px;
+            color: var(--accent-purple);
+        }
+        
+        /* Мобильная адаптация */
+        @media (max-width: 768px) {
+            #test-level-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .monitor-button {
+                margin-top: var(--spacing-sm);
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .status-container {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .system-wallet-info {
+                width: 100%;
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .wallet-address {
+                width: 100%;
+                max-width: none;
+            }
+        }
+    </style>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Копирование системного адреса
+            const copySystemBtn = document.getElementById('copySystemWalletBtn');
+            if (copySystemBtn) {
+                copySystemBtn.addEventListener('click', function() {
+                    const systemAddress = document.getElementById('systemWalletDisplay').textContent;
+                    navigator.clipboard.writeText(systemAddress)
+                        .then(() => { showNotification('Адрес скопирован в буфер обмена', 'success'); })
+                        .catch(() => { showNotification('Не удалось скопировать адрес', 'error'); });
+                });
+            }
+            
+            // Обновляем кнопку мониторинга
+            const startBtn = document.getElementById('startTestLevelBtn');
+            if (startBtn) {
+                startBtn.addEventListener('click', function() {
+                    if (this.classList.contains('active')) {
+                        this.classList.remove('active');
+                        this.innerHTML = '<i class="ri-play-circle-line"></i><span>Начать мониторинг</span>';
+                    } else {
+                        this.classList.add('active');
+                        this.innerHTML = '<i class="ri-stop-circle-line"></i><span>Остановить мониторинг</span>';
+                    }
+                });
+            }
+            
+            // Обновление счетчика транзакций
+            function updateTxCounter(count) {
+                const counter = document.getElementById('txCounter');
+                if (counter) {
+                    counter.textContent = count;
+                    if (count > 0) {
+                        counter.classList.add('has-txs');
+                    }
+                }
+            }
+            
+            // Обновление маркеров прогресса
+            function updateProgressMarkers(percentage) {
+                const markers = document.querySelectorAll('.marker');
+                markers.forEach(marker => {
+                    const markerValue = parseInt(marker.getAttribute('data-percentage'));
+                    if (percentage >= markerValue) {
+                        marker.classList.add('reached');
+                    } else {
+                        marker.classList.remove('reached');
+                    }
+                });
+            }
+            
+            // Экспортируем функции для использования в основном скрипте
+            window.testLevelUX = {
+                updateTxCounter,
+                updateProgressMarkers
+            };
+        });
+    </script></div>
+
+    <!-- Потоки с улучшенным UX -->
+    <div class="streams-container">
+      <div class="section-header">
+        <h3><i class="ri-flow-chart"></i> Потоки</h3>
+        <div class="streams-info-badge" title="Информация о потоках">
+        <i class="ri-information-line"></i>
+        <div class="tooltip">Оплачивайте потоки ежедневно для получения бонусов и наград</div>
+        </div>
+      </div></div>
+      
+      <div class="streams-grid">
         <!-- Поток 1 -->
         <div class="stream-card" data-stream="1">
-          <div class="stream-header">
-            <div class="stream-title">Поток 1 (100 PLEX/сутки)</div>
-            <div class="stream-streak">Дней подряд: <span class="streamCount">0</span></div>
+        <div class="stream-status-indicator"></div>
+        <div class="stream-header">
+          <div class="stream-title-group">
+            <div class="stream-icon"><i class="ri-coin-line"></i></div>
+            <div class="stream-title">Поток 1</div>
           </div>
-          <div class="stream-description">
-            <p>Доход: ~20k–25k USD. Стабильные выплаты увеличивают бонусы!</p>
+          <div class="stream-amount">100 PLEX/сутки</div>
+        </div>
+        
+        <div class="stream-metrics">
+          <div class="metric">
+            <div class="metric-label">Статус</div>
+            <div class="metric-value status-unpaid">Не оплачен</div>
+          </div>
+          <div class="metric">
+            <div class="metric-label">Дней подряд</div>
+            <div class="metric-value"><span class="streamCount">0</span></div>
+          </div>
+        </div>
+        
+        <div class="stream-description">
+          <p>Доход: ~20k–25k USD. Стабильные выплаты увеличивают бонусы!</p>
+        </div>
+        
+        <div class="progress-container">
+          <div class="progress-info">
+            <span class="progress-label">Прогресс потока</span>
+            <span class="progress-percentage">0%</span>
           </div>
           <div class="progress-bar-container">
             <div class="progress-bar"></div>
           </div>
-          <button class="streamButton" data-amount="100">Внести 100 PLEX</button>
+          <div class="progress-milestones">
+            <div class="milestone" style="left:25%" data-days="3"></div>
+            <div class="milestone" style="left:50%" data-days="5"></div>
+            <div class="milestone" style="left:75%" data-days="7"></div>
+            <div class="milestone" style="left:100%" data-days="10"></div>
+          </div>
         </div>
+        
+        <button class="streamButton primary-button" data-amount="100">
+          <span class="button-icon"><i class="ri-bank-card-line"></i></span>
+          <span>Внести 100 PLEX</span>
+        </button>
+        </div>
+        
         <!-- Поток 2 -->
         <div class="stream-card" data-stream="2">
-          <div class="stream-header">
-            <div class="stream-title">Поток 2 (200 PLEX/сутки)</div>
-            <div class="stream-streak">Дней подряд: <span class="streamCount">0</span></div>
+        <div class="stream-status-indicator"></div>
+        <div class="stream-header">
+          <div class="stream-title-group">
+            <div class="stream-icon"><i class="ri-coins-line"></i></div>
+            <div class="stream-title">Поток 2</div>
           </div>
-          <div class="stream-description">
-            <p>Стабильный доход и бонусы!</p>
+          <div class="stream-amount">200 PLEX/сутки</div>
+        </div>
+        
+        <div class="stream-metrics">
+          <div class="metric">
+            <div class="metric-label">Статус</div>
+            <div class="metric-value status-unpaid">Не оплачен</div>
+          </div>
+          <div class="metric">
+            <div class="metric-label">Дней подряд</div>
+            <div class="metric-value"><span class="streamCount">0</span></div>
+          </div>
+        </div>
+        
+        <div class="stream-description">
+          <p>Стабильный доход и бонусы! Выше вложения — больше прибыль.</p>
+        </div>
+        
+        <div class="progress-container">
+          <div class="progress-info">
+            <span class="progress-label">Прогресс потока</span>
+            <span class="progress-percentage">0%</span>
           </div>
           <div class="progress-bar-container">
             <div class="progress-bar"></div>
           </div>
-          <button class="streamButton" data-amount="200">Внести 200 PLEX</button>
+          <div class="progress-milestones">
+            <div class="milestone" style="left:25%" data-days="3"></div>
+            <div class="milestone" style="left:50%" data-days="5"></div>
+            <div class="milestone" style="left:75%" data-days="7"></div>
+            <div class="milestone" style="left:100%" data-days="10"></div>
+          </div>
         </div>
+        
+        <button class="streamButton primary-button" data-amount="200">
+          <span class="button-icon"><i class="ri-bank-card-line"></i></span>
+          <span>Внести 200 PLEX</span>
+        </button>
+        </div>
+        
         <!-- Поток 3 -->
         <div class="stream-card" data-stream="3">
-          <div class="stream-header">
-            <div class="stream-title">Поток 3 (300 PLEX/сутки)</div>
-            <div class="stream-streak">Дней подряд: <span class="streamCount">0</span></div>
+        <div class="stream-status-indicator"></div>
+        <div class="stream-header">
+          <div class="stream-title-group">
+            <div class="stream-icon"><i class="ri-money-dollar-circle-line"></i></div>
+            <div class="stream-title">Поток 3</div>
           </div>
-          <div class="stream-description">
-            <p>Увеличение бонусов с каждым днем!</p>
+          <div class="stream-amount">300 PLEX/сутки</div>
+        </div>
+        
+        <div class="stream-metrics">
+          <div class="metric">
+            <div class="metric-label">Статус</div>
+            <div class="metric-value status-unpaid">Не оплачен</div>
+          </div>
+          <div class="metric">
+            <div class="metric-label">Дней подряд</div>
+            <div class="metric-value"><span class="streamCount">0</span></div>
+          </div>
+        </div>
+        
+        <div class="stream-description">
+          <p>Увеличение бонусов с каждым днем! Оптимальное соотношение вложения/доход.</p>
+        </div>
+        
+        <div class="progress-container">
+          <div class="progress-info">
+            <span class="progress-label">Прогресс потока</span>
+            <span class="progress-percentage">0%</span>
           </div>
           <div class="progress-bar-container">
             <div class="progress-bar"></div>
           </div>
-          <button class="streamButton" data-amount="300">Внести 300 PLEX</button>
+          <div class="progress-milestones">
+            <div class="milestone" style="left:25%" data-days="3"></div>
+            <div class="milestone" style="left:50%" data-days="5"></div>
+            <div class="milestone" style="left:75%" data-days="7"></div>
+            <div class="milestone" style="left:100%" data-days="10"></div>
+          </div>
         </div>
+        
+        <button class="streamButton primary-button" data-amount="300">
+          <span class="button-icon"><i class="ri-bank-card-line"></i></span>
+          <span>Внести 300 PLEX</span>
+        </button>
+        </div>
+        
         <!-- Поток 4 -->
         <div class="stream-card" data-stream="4">
-          <div class="stream-header">
-            <div class="stream-title">Поток 4 (400 PLEX/сутки)</div>
-            <div class="stream-streak">Дней подряд: <span class="streamCount">0</span></div>
+        <div class="stream-status-indicator"></div>
+        <div class="stream-header">
+          <div class="stream-title-group">
+            <div class="stream-icon"><i class="ri-money-dollar-box-line"></i></div>
+            <div class="stream-title">Поток 4</div>
           </div>
-          <div class="stream-description">
-            <p>Поддержка стабильного дохода!</p>
+          <div class="stream-amount">400 PLEX/сутки</div>
+        </div>
+        
+        <div class="stream-metrics">
+          <div class="metric">
+            <div class="metric-label">Статус</div>
+            <div class="metric-value status-unpaid">Не оплачен</div>
+          </div>
+          <div class="metric">
+            <div class="metric-label">Дней подряд</div>
+            <div class="metric-value"><span class="streamCount">0</span></div>
+          </div>
+        </div>
+        
+        <div class="stream-description">
+          <p>Поддержка стабильного дохода! Для опытных инвесторов.</p>
+        </div>
+        
+        <div class="progress-container">
+          <div class="progress-info">
+            <span class="progress-label">Прогресс потока</span>
+            <span class="progress-percentage">0%</span>
           </div>
           <div class="progress-bar-container">
             <div class="progress-bar"></div>
           </div>
-          <button class="streamButton" data-amount="400">Внести 400 PLEX</button>
+          <div class="progress-milestones">
+            <div class="milestone" style="left:25%" data-days="3"></div>
+            <div class="milestone" style="left:50%" data-days="5"></div>
+            <div class="milestone" style="left:75%" data-days="7"></div>
+            <div class="milestone" style="left:100%" data-days="10"></div>
+          </div>
         </div>
+        
+        <button class="streamButton primary-button" data-amount="400">
+          <span class="button-icon"><i class="ri-bank-card-line"></i></span>
+          <span>Внести 400 PLEX</span>
+        </button>
+        </div>
+        
         <!-- Поток 5 -->
         <div class="stream-card" data-stream="5">
-          <div class="stream-header">
-            <div class="stream-title">Поток 5 (500 PLEX/сутки)</div>
-            <div class="stream-streak">Дней подряд: <span class="streamCount">0</span></div>
+        <div class="stream-status-indicator"></div>
+        <div class="stream-header">
+          <div class="stream-title-group">
+            <div class="stream-icon"><i class="ri-vip-crown-line"></i></div>
+            <div class="stream-title">Поток 5</div>
           </div>
-          <div class="stream-description">
-            <p>Максимальные бонусы для максимальных инвесторов!</p>
+          <div class="stream-amount">500 PLEX/сутки</div>
+        </div>
+        
+        <div class="stream-metrics">
+          <div class="metric">
+            <div class="metric-label">Статус</div>
+            <div class="metric-value status-unpaid">Не оплачен</div>
+          </div>
+          <div class="metric">
+            <div class="metric-label">Дней подряд</div>
+            <div class="metric-value"><span class="streamCount">0</span></div>
+          </div>
+        </div>
+        
+        <div class="stream-description">
+          <p>Максимальные бонусы для максимальных инвесторов! VIP уровень.</p>
+        </div>
+        
+        <div class="progress-container">
+          <div class="progress-info">
+            <span class="progress-label">Прогресс потока</span>
+            <span class="progress-percentage">0%</span>
           </div>
           <div class="progress-bar-container">
             <div class="progress-bar"></div>
           </div>
-          <button class="streamButton" data-amount="500">Внести 500 PLEX</button>
+          <div class="progress-milestones">
+            <div class="milestone" style="left:25%" data-days="3"></div>
+            <div class="milestone" style="left:50%" data-days="5"></div>
+            <div class="milestone" style="left:75%" data-days="7"></div>
+            <div class="milestone" style="left:100%" data-days="10"></div>
+          </div>
+        </div>
+        
+        <button class="streamButton primary-button" data-amount="500">
+          <span class="button-icon"><i class="ri-bank-card-line"></i></span>
+          <span>Внести 500 PLEX</span>
+        </button>
         </div>
       </div>
+    </div>
 
-      <div class="rewards">
-        <h3>Награды</h3>
-        <button id="rewardButton" disabled>Получить награду</button>
-        <div id="rewardDisplay"></div>
+    <!-- Секция наград с улучшенным UX -->
+    <div class="rewards-section">
+      <div class="section-header">
+        <h3><i class="ri-award-line"></i> Награды</h3>
+        <div class="rewards-info-badge" title="Информация о наградах">
+        <i class="ri-information-line"></i>
+        <div class="tooltip">Получайте награды после оплаты всех активных потоков</div>
+        </div>
+      </div>
+      
+      <div class="rewards-card">
+        <div class="rewards-status">
+        <div class="status-circle"></div>
+        <div class="status-text">Награда недоступна</div>
+        </div>
+        
+        <div class="rewards-info">
+        <div class="rewards-description">
+          <p>Оплатите все активные потоки, чтобы разблокировать награду. Чем больше дней подряд вы поддерживаете потоки, тем выше шанс получить редкую награду!</p>
+        </div>
+        
+        <div class="rewards-types">
+          <div class="reward-type">
+            <div class="reward-icon common"><i class="ri-copper-coin-line"></i></div>
+            <div class="reward-name">Обычная</div>
+          </div>
+          <div class="reward-type">
+            <div class="reward-icon rare"><i class="ri-coin-line"></i></div>
+            <div class="reward-name">Редкая</div>
+          </div>
+          <div class="reward-type">
+            <div class="reward-icon epic"><i class="ri-vip-crown-line"></i></div>
+            <div class="reward-name">Эпическая</div>
+          </div>
+        </div>
+        </div>
+        
+        <button id="rewardButton" disabled class="reward-button">
+        <div class="button-glow"></div>
+        <i class="ri-gift-line"></i>
+        <span>Получить награду</span>
+        </button>
+        
+        <div id="rewardDisplay" class="reward-result"></div>
       </div>
     </div>
+    </div>
   </main>
+
+  <!-- Стили для улучшенного UX -->
+  <style>
+    /* Общие стили секций */
+    .section-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: var(--spacing-md);
+    }
+    
+    .section-header h3 {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0;
+    font-size: 1.4rem;
+    }
+
+    .section-header i {
+    color: var(--accent-blue);
+    }
+    
+    /* Информационные значки */
+    .streams-info-badge, .rewards-info-badge {
+    position: relative;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: rgba(45, 127, 249, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--accent-blue);
+    cursor: pointer;
+    }
+    
+    .streams-info-badge:hover .tooltip, 
+    .rewards-info-badge:hover .tooltip {
+    opacity: 1;
+    transform: translateY(0);
+    visibility: visible;
+    }
+    
+    .tooltip {
+    position: absolute;
+    bottom: 28px;
+    left: 50%;
+    transform: translateX(-50%) translateY(10px);
+    background: var(--bg-card);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    padding: 10px 15px;
+    white-space: nowrap;
+    color: var(--text-primary);
+    font-size: 0.8rem;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    z-index: 10;
+    width: max-content;
+    max-width: 250px;
+    }
+    
+    .tooltip::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -8px;
+    border-width: 8px;
+    border-style: solid;
+    border-color: var(--bg-card) transparent transparent transparent;
+    }
+    
+    /* Сетка потоков */
+    .streams-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: var(--spacing-lg);
+    }
+    
+    /* Карточка потока */
+    .stream-card {
+    position: relative;
+    background: var(--bg-card);
+    padding: var(--spacing-md);
+    border-radius: var(--border-radius-lg);
+    transition: all 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    overflow: hidden;
+    }
+    
+    .stream-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    border-color: rgba(45, 127, 249, 0.3);
+    }
+    
+    /* Индикатор статуса потока */
+    .stream-status-indicator {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background: var(--text-tertiary);
+    transition: background 0.3s ease;
+    }
+    
+    .stream-card.stream-paid .stream-status-indicator {
+    background: var(--accent-green);
+    }
+    
+    /* Заголовок потока */
+    .stream-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-md);
+    }
+    
+    .stream-title-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    }
+    
+    .stream-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    background: linear-gradient(135deg, rgba(45, 127, 249, 0.2), rgba(0, 226, 195, 0.2));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    color: var(--accent-blue);
+    }
+    
+    .stream-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    }
+    
+    .stream-amount {
+    background: rgba(0, 226, 195, 0.1);
+    border-radius: 16px;
+    padding: 4px 12px;
+    font-size: 0.9rem;
+    color: var(--accent-turquoise);
+    font-weight: 500;
+    }
+    
+    /* Метрики потока */
+    .stream-metrics {
+    display: flex;
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-sm);
+    }
+    
+    .metric {
+    flex: 1;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 8px;
+    padding: 8px 12px;
+    }
+    
+    .metric-label {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    margin-bottom: 2px;
+    }
+    
+    .metric-value {
+    font-weight: 500;
+    }
+    
+    .status-unpaid {
+    color: var(--accent-yellow);
+    }
+    
+    .status-paid {
+    color: var(--accent-green);
+    }
+    
+    /* Описание потока */
+    .stream-description {
+    margin-bottom: var(--spacing-md);
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    }
+    
+    .stream-description p {
+    margin: 0;
+    line-height: 1.5;
+    }
+    
+    /* Контейнер прогресса */
+    .progress-container {
+    margin-bottom: var(--spacing-md);
+    }
+    
+    .progress-info {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 6px;
+    font-size: 0.8rem;
+    }
+    
+    .progress-label {
+    color: var(--text-secondary);
+    }
+    
+    .progress-percentage {
+    color: var(--accent-blue);
+    font-weight: 500;
+    }
+    
+    .progress-bar-container {
+    height: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 8px;
+    }
+    
+    .progress-bar {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, var(--accent-blue), var(--accent-turquoise));
+    border-radius: 4px;
+    transition: width 1s cubic-bezier(0.65, 0, 0.35, 1);
+    }
+    
+    .progress-bar.completed {
+    background: linear-gradient(90deg, var(--accent-green), var(--accent-turquoise));
+    }
+    
+    /* Вехи прогресса */
+    .progress-milestones {
+    position: relative;
+    height: 16px;
+    }
+    
+    .milestone {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    background: var(--text-tertiary);
+    border-radius: 50%;
+    transform: translateX(-50%) translateY(5px);
+    }
+    
+    .milestone::before {
+    content: attr(data-days) ' дн.';
+    position: absolute;
+    top: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.7rem;
+    color: var(--text-tertiary);
+    white-space: nowrap;
+    }
+    
+    /* Кнопка потока */
+    .primary-button {
+    width: 100%;
+    background: linear-gradient(90deg, var(--accent-blue), var(--accent-turquoise));
+    border: none;
+    color: white;
+    padding: 10px 16px;
+    border-radius: 8px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    position: relative;
+    overflow: hidden;
+    }
+    
+    .primary-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 226, 195, 0.3);
+    }
+    
+    .primary-button:active {
+    transform: translateY(1px);
+    }
+    
+    .primary-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 1s;
+    }
+    
+    .primary-button:hover::before {
+    left: 100%;
+    }
+    
+    .button-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    }
+    
+    .button-pressed {
+    transform: scale(0.98);
+    }
+    
+    .button-success {
+    background: var(--accent-green) !important;
+    }
+    
+    .button-disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+    }
+    
+    /* Секция наград */
+    .rewards-section {
+    margin-top: var(--spacing-xl);
+    }
+    
+    .rewards-card {
+    background: var(--bg-card);
+    border-radius: var(--border-radius-lg);
+    padding: var(--spacing-lg);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    position: relative;
+    overflow: hidden;
+    }
+    
+    /* Статус награды */
+    .rewards-status {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: var(--spacing-md);
+    }
+    
+    .status-circle {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--accent-yellow);
+    }
+    
+    .status-text {
+    font-size: 0.9rem;
+    color: var(--accent-yellow);
+    }
+    
+    .rewards-status.available .status-circle {
+    background: var(--accent-green);
+    }
+    
+    .rewards-status.available .status-text {
+    color: var(--accent-green);
+    }
+    
+    /* Информация о наградах */
+    .rewards-info {
+    margin-bottom: var(--spacing-md);
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--spacing-md);
+    }
+    
+    @media (min-width: 768px) {
+    .rewards-info {
+      grid-template-columns: 2fr 1fr;
+    }
+    }
+    
+    .rewards-description {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    line-height: 1.6;
+    }
+    
+    .rewards-types {
+    display: flex;
+    gap: var(--spacing-sm);
+    justify-content: center;
+    flex-wrap: wrap;
+    }
+    
+    .reward-type {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    }
+    
+    .reward-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    }
+    
+    .reward-icon.common {
+    background: linear-gradient(135deg, #cd7f32, #a06023);
+    color: white;
+    }
+    
+    .reward-icon.rare {
+    background: linear-gradient(135deg, #c0c0c0, #a0a0a0);
+    color: white;
+    }
+    
+    .reward-icon.epic {
+    background: linear-gradient(135deg, #ffd700, #b8860b);
+    color: white;
+    box-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
+    }
+    
+    .reward-name {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    }
+    
+    /* Кнопка награды */
+    .reward-button {
+    position: relative;
+    background: linear-gradient(90deg, var(--accent-purple), var(--accent-magenta));
+    border: none;
+    color: white;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-weight: 500;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    max-width: 300px;
+    margin: 0 auto;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    }
+    
+    .reward-button:not(:disabled):hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(255, 59, 154, 0.4);
+    }
+    
+    .reward-button:disabled {
+    background: linear-gradient(90deg, #4a4a4a, #333333);
+    cursor: not-allowed;
+    opacity: 0.7;
+    }
+    
+    .button-glow {
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.3) 0%, transparent 70%);
+    transform: scale(0);
+    opacity: 0;
+    transition: transform 0.5s, opacity 0.5s;
+    }
+    
+    .ready-to-claim .button-glow {
+    animation: pulse-glow 2s infinite;
+    }
+    
+    @keyframes pulse-glow {
+    0%, 100% { transform: scale(0); opacity: 0; }
+    50% { transform: scale(1); opacity: 0.3; }
+    }
+    
+    /* Результат награды */
+    .reward-result {
+    margin-top: var(--spacing-md);
+    min-height: 60px;
+    text-align: center;
+    }
+    
+    .reward-result-content {
+    animation: pop-in 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    
+    @keyframes pop-in {
+    0% { transform: scale(0.5); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+    }
+    
+    /* Адаптивность для мобильных устройств */
+    @media (max-width: 576px) {
+    .streams-grid {
+      grid-template-columns: 1fr;
+    }
+    
+    .stream-metrics {
+      flex-direction: column;
+      gap: var(--spacing-sm);
+    }
+    
+    .rewards-types {
+      justify-content: space-around;
+    }
+    }
+  </style>
+  
+  <!-- Дополнительный JavaScript для улучшенного UX -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+    // Добавляем функционал обновления процента прогресса
+    function updateStreamProgress(streamId) {
+      const streamCard = document.querySelector(`.stream-card[data-stream="${streamId}"]`);
+      if (streamCard) {
+        const progressBar = streamCard.querySelector('.progress-bar');
+        const progressPercentage = streamCard.querySelector('.progress-percentage');
+        const streak = parseInt(streamCard.querySelector('.streamCount').textContent);
+        const percentage = Math.min((streak / 10) * 100, 100);
+        
+        progressBar.style.width = percentage + "%";
+        progressPercentage.textContent = Math.floor(percentage) + "%";
+        
+        // Обновляем класс для статуса
+        const statusValue = streamCard.querySelector('.metric-value.status-unpaid');
+        if (streamsStatus[streamId].paidToday) {
+        statusValue.textContent = 'Оплачен';
+        statusValue.classList.remove('status-unpaid');
+        statusValue.classList.add('status-paid');
+        }
+        
+        // Обновляем классы вех прогресса
+        const milestones = streamCard.querySelectorAll('.milestone');
+        milestones.forEach(milestone => {
+        const days = parseInt(milestone.getAttribute('data-days'));
+        if (streak >= days) {
+          milestone.style.background = 'var(--accent-green)';
+        }
+        });
+      }
+    }
+    
+    // Обновляем все прогресс-бары при загрузке страницы
+    for (let i = 1; i <= 5; i++) {
+      updateStreamProgress(i);
+    }
+    
+    // Обновляем доступность награды
+    function updateRewardAvailability() {
+      const rewardButton = document.getElementById('rewardButton');
+      const rewardsStatus = document.querySelector('.rewards-status');
+      const statusText = rewardsStatus.querySelector('.status-text');
+      
+      if (debt === 0 && allStreamsPaid() && !rewardClaimedToday) {
+        rewardButton.disabled = false;
+        rewardButton.classList.add('ready-to-claim');
+        
+        rewardsStatus.classList.add('available');
+        statusText.textContent = 'Награда доступна!';
+        
+      } else {
+        rewardButton.disabled = true;
+        rewardButton.classList.remove('ready-to-claim');
+        
+        rewardsStatus.classList.remove('available');
+        
+        if (rewardClaimedToday) {
+        statusText.textContent = 'Награда получена';
+        } else {
+        statusText.textContent = 'Награда недоступна';
+        }
+      }
+    }
+    
+    // Обновляем доступность награды при загрузке
+    updateRewardAvailability();
+    
+    // Переопределяем функцию для обработки нажатия на кнопки потоков
+    document.querySelectorAll('.streamButton').forEach(button => {
+      button.addEventListener('click', (e) => {
+        const originalHandler = e.target._clickHandler;
+        if (originalHandler) {
+        // Удаляем предыдущий обработчик
+        e.target.removeEventListener('click', originalHandler);
+        }
+        
+        const streamCard = e.target.closest('.stream-card');
+        const streamId = streamCard.getAttribute('data-stream');
+        
+        if (!streamsStatus[streamId].paidToday) {
+        const amount = e.target.getAttribute('data-amount');
+        
+        // Визуальный эффект нажатия
+        e.target.classList.add('button-pressed');
+        setTimeout(() => e.target.classList.remove('button-pressed'), 300);
+        
+        // Имитируем отправку транзакции
+        e.target.disabled = true;
+        e.target.innerHTML = `
+          <div class="loading-spinner small"></div>
+          <span>Обработка...</span>
+        `;
+        
+        // Имитируем задержку сети
+        setTimeout(() => {
+          streamsStatus[streamId].paidToday = true;
+          streamsStatus[streamId].count++;
+          
+          streamCard.querySelector('.streamCount').innerText = streamsStatus[streamId].count;
+          
+          // Обновляем визуальные элементы
+          updateStreamProgress(streamId);
+          updateRewardAvailability();
+          
+          // Анимируем карточку как "оплаченную"
+          streamCard.classList.add('stream-paid');
+          
+          // Восстанавливаем кнопку с эффектом успешной оплаты
+          e.target.classList.add('button-success');
+          e.target.innerHTML = `
+            <i class="ri-checkbox-circle-line"></i>
+            <span>Оплачено</span>
+          `;
+          
+          // Показываем уведомление
+          showNotification(`Поток ${streamId} оплачен на сумму ${amount} PLEX`, 'success');
+          
+          // Возвращаем исходное состояние через некоторое время
+          setTimeout(() => {
+            e.target.classList.remove('button-success');
+            e.target.disabled = false;
+            e.target.innerHTML = `
+            <span class="button-icon"><i class="ri-bank-card-line"></i></span>
+            <span>Внести ${amount} PLEX</span>
+            `;
+          }, 3000);
+        }, 1500);
+        } else {
+        // Показываем уведомление, что поток уже оплачен
+        showNotification(`Поток ${streamId} уже оплачен сегодня`, 'info');
+        
+        // Визуальный эффект невозможности повторной оплаты
+        e.target.classList.add('button-disabled');
+        setTimeout(() => e.target.classList.remove('button-disabled'), 300);
+        }
+        
+        resetIdleTimer();
+      });
+      
+      // Сохраняем ссылку на новый обработчик
+      button._clickHandler = button.onclick;
+    });
+    
+    // Переопределяем функцию для кнопки награды
+    document.getElementById('rewardButton').addEventListener('click', (e) => {
+      if (e.target._clickHandler) {
+        e.target.removeEventListener('click', e.target._clickHandler);
+      }
+      
+      if (debt === 0 && allStreamsPaid()) {
+        if (!rewardClaimedToday) {
+        // Визуальная обратная связь
+        e.target.classList.add('button-pressed');
+        e.target.disabled = true;
+        e.target.innerHTML = `
+          <div class="loading-spinner small"></div>
+          <span>Получение награды...</span>
+        `;
+        
+        setTimeout(() => {
+          rewardClaimedToday = true;
+          
+          const rewards = [
+            { name: 'Бронзовая награда', icon: 'ri-copper-coin-line', color: '#cd7f32', type: 'common' },
+            { name: 'Серебряная награда', icon: 'ri-coin-line', color: '#c0c0c0', type: 'rare' },
+            { name: 'Золотая награда', icon: 'ri-vip-crown-line', color: '#ffd700', type: 'epic' }
+          ];
+          
+          const streak = Math.max(...Object.values(streamsStatus).map(s => s.count));
+          let rewardChances;
+          
+          if (streak < 3) {
+            rewardChances = [0.8, 0.15, 0.05]; // 80% бронза, 15% серебро, 5% золото
+          } else if (streak < 7) {
+            rewardChances = [0.6, 0.30, 0.1]; // 60% бронза, 30% серебро, 10% золото
+          } else {
+            rewardChances = [0.4, 0.40, 0.2]; // 40% бронза, 40% серебро, 20% золото
+          }
+          
+          // Выбираем награду на основе вероятности
+          const randomValue = Math.random();
+          let selectedReward;
+          let cumulativeProb = 0;
+          
+          for (let i = 0; i < rewardChances.length; i++) {
+            cumulativeProb += rewardChances[i];
+            if (randomValue <= cumulativeProb) {
+            selectedReward = rewards[i];
+            break;
+            }
+          }
+          
+          // Отображаем результат
+          document.getElementById('rewardDisplay').innerHTML = `
+            <div class="reward-result-content">
+            <div class="reward-icon ${selectedReward.type}" style="margin: 0 auto 15px;">
+              <i class="${selectedReward.icon}"></i>
+            </div>
+            <div style="font-size: 1.2rem; font-weight: 600; color: ${selectedReward.color};">
+              ${selectedReward.name}
+            </div>
+            <p style="color: var(--text-secondary); margin-top: 10px;">
+              Поздравляем! Продолжайте оплачивать потоки для увеличения шанса на редкие награды.
+            </p>
+            </div>
+          `;
+          
+          // Визуальные эффекты для награды
+          if (selectedReward.type !== 'common') {
+            launchConfetti();
+          }
+          
+          // Показываем уведомление
+          showNotification(`Поздравляем! Вы получили ${selectedReward.name}`, 'success');
+          
+          // Обновляем кнопку и статус
+          e.target.classList.remove('button-pressed');
+          e.target.innerHTML = `<i class="ri-checkbox-circle-line"></i> Награда получена`;
+          updateRewardAvailability();
+        }, 2000);
+        } else {
+        showNotification('Вы уже получили награду сегодня', 'info');
+        }
+      } else {
+        if (debt > 0) {
+        showNotification(`Погасите долг ${debt} PLEX для получения награды`, 'warning');
+        } else {
+        showNotification('Оплатите все активные потоки для получения награды', 'warning');
+        }
+      }
+      
+      resetIdleTimer();
+    });
+    
+    e.target._clickHandler = e.target.onclick;
+    });
+  </script>
 
 <!-- FOOTER -->
 <footer class="site-footer">
