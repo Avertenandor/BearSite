@@ -1,0 +1,81 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Фон -->
+  <rect width="1200" height="630" fill="url(#bgGradient)"/>
+  
+  <!-- Градиентный фон -->
+  <defs>
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0f172a;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#1e293b;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0f172a;stop-opacity:1" />
+    </linearGradient>
+    
+    <linearGradient id="textGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#3b82f6;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#f59e0b;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#10b981;stop-opacity:1" />
+    </linearGradient>
+    
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+      <feMerge> 
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  
+  <!-- Декоративные элементы -->
+  <circle cx="100" cy="100" r="50" fill="rgba(59, 130, 246, 0.1)"/>
+  <circle cx="1100" cy="530" r="80" fill="rgba(245, 158, 11, 0.1)"/>
+  <circle cx="200" cy="500" r="30" fill="rgba(16, 185, 129, 0.1)"/>
+  
+  <!-- Основной заголовок -->
+  <text x="600" y="200" text-anchor="middle" font-family="Arial, sans-serif" font-size="72" font-weight="bold" fill="url(#textGradient)" filter="url(#glow)">
+    PLEX ONE MARATHON
+  </text>
+  
+  <!-- Подзаголовок -->
+  <text x="600" y="280" text-anchor="middle" font-family="Arial, sans-serif" font-size="36" fill="white">
+    Криптомарафон на Binance Smart Chain
+  </text>
+  
+  <!-- Описание -->
+  <text x="600" y="340" text-anchor="middle" font-family="Arial, sans-serif" font-size="24" fill="#9ca3af">
+    730-дневный марафон с токеном PLEX ONE
+  </text>
+  
+  <!-- Контракт -->
+  <text x="600" y="400" text-anchor="middle" font-family="monospace" font-size="18" fill="#6b7280">
+    0xdf179b6cAdBC61FFD86A3D2e55f6d6e083ade6c1
+  </text>
+  
+  <!-- Статистика -->
+  <g transform="translate(600, 480)">
+    <!-- Авторизация -->
+    <rect x="-280" y="0" width="120" height="80" rx="10" fill="rgba(59, 130, 246, 0.2)" stroke="#3b82f6" stroke-width="2"/>
+    <text x="-220" y="25" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" fill="white">Авторизация</text>
+    <text x="-220" y="50" text-anchor="middle" font-family="Arial, sans-serif" font-size="20" font-weight="bold" fill="#3b82f6">1 PLEX</text>
+    
+    <!-- Старт -->
+    <rect x="-140" y="0" width="120" height="80" rx="10" fill="rgba(245, 158, 11, 0.2)" stroke="#f59e0b" stroke-width="2"/>
+    <text x="-80" y="25" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" fill="white">Старт</text>
+    <text x="-80" y="50" text-anchor="middle" font-family="Arial, sans-serif" font-size="20" font-weight="bold" fill="#f59e0b">7 PLEX</text>
+    
+    <!-- Потоки -->
+    <rect x="0" y="0" width="120" height="80" rx="10" fill="rgba(16, 185, 129, 0.2)" stroke="#10b981" stroke-width="2"/>
+    <text x="60" y="25" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" fill="white">Потоки</text>
+    <text x="60" y="50" text-anchor="middle" font-family="Arial, sans-serif" font-size="20" font-weight="bold" fill="#10b981">100-500</text>
+    
+    <!-- Дни -->
+    <rect x="140" y="0" width="120" height="80" rx="10" fill="rgba(239, 68, 68, 0.2)" stroke="#ef4444" stroke-width="2"/>
+    <text x="200" y="25" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" fill="white">Длительность</text>
+    <text x="200" y="50" text-anchor="middle" font-family="Arial, sans-serif" font-size="20" font-weight="bold" fill="#ef4444">730 дней</text>
+  </g>
+  
+  <!-- Логотип в углу -->
+  <g transform="translate(50, 50)">
+    <rect width="60" height="60" rx="8" fill="url(#textGradient)"/>
+    <text x="30" y="35" text-anchor="middle" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="white">P</text>
+  </g>
+</svg> 
