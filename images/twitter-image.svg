@@ -1,72 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <svg width="1200" height="600" viewBox="0 0 1200 600" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <!-- Фон -->
-  <rect width="1200" height="600" fill="url(#bgGradient)"/>
-  
-  <!-- Градиентный фон -->
   <defs>
-    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#0f172a;stop-opacity:1" />
-      <stop offset="50%" style="stop-color:#1e293b;stop-opacity:1" />
-      <stop offset="100%" style="stop-color:#0f172a;stop-opacity:1" />
+    <linearGradient id="bg" x1="0" y1="0" x2="1200" y2="600" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#232046"/>
+      <stop offset="1" stop-color="#1e3a8a"/>
     </linearGradient>
-    
-    <linearGradient id="textGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" style="stop-color:#3b82f6;stop-opacity:1" />
-      <stop offset="50%" style="stop-color:#f59e0b;stop-opacity:1" />
-      <stop offset="100%" style="stop-color:#10b981;stop-opacity:1" />
-    </linearGradient>
+    <filter id="glow" x="0" y="0" width="300" height="300">
+      <feGaussianBlur stdDeviation="20" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
   </defs>
-  
-  <!-- Декоративные элементы -->
-  <circle cx="100" cy="100" r="40" fill="rgba(59, 130, 246, 0.1)"/>
-  <circle cx="1100" cy="500" r="60" fill="rgba(245, 158, 11, 0.1)"/>
-  
-  <!-- Основной заголовок -->
-  <text x="600" y="180" text-anchor="middle" font-family="Arial, sans-serif" font-size="64" font-weight="bold" fill="url(#textGradient)">
-    PLEX ONE MARATHON
-  </text>
-  
-  <!-- Подзаголовок -->
-  <text x="600" y="240" text-anchor="middle" font-family="Arial, sans-serif" font-size="32" fill="white">
-    Криптомарафон на BSC
-  </text>
-  
-  <!-- Описание -->
-  <text x="600" y="290" text-anchor="middle" font-family="Arial, sans-serif" font-size="20" fill="#9ca3af">
-    730 дней • 5 потоков • Авторизация 1 PLEX ONE
-  </text>
-  
-  <!-- Контракт -->
-  <text x="600" y="340" text-anchor="middle" font-family="monospace" font-size="16" fill="#6b7280">
-    0xdf179b6cAdBC61FFD86A3D2e55f6d6e083ade6c1
-  </text>
-  
-  <!-- Статистика -->
-  <g transform="translate(600, 420)">
-    <!-- Авторизация -->
-    <rect x="-200" y="0" width="100" height="60" rx="8" fill="rgba(59, 130, 246, 0.2)" stroke="#3b82f6" stroke-width="2"/>
-    <text x="-150" y="20" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" fill="white">Авторизация</text>
-    <text x="-150" y="40" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#3b82f6">1 PLEX</text>
-    
-    <!-- Старт -->
-    <rect x="-90" y="0" width="100" height="60" rx="8" fill="rgba(245, 158, 11, 0.2)" stroke="#f59e0b" stroke-width="2"/>
-    <text x="-40" y="20" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" fill="white">Старт</text>
-    <text x="-40" y="40" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#f59e0b">7 PLEX</text>
-    
-    <!-- Потоки -->
-    <rect x="20" y="0" width="100" height="60" rx="8" fill="rgba(16, 185, 129, 0.2)" stroke="#10b981" stroke-width="2"/>
-    <text x="70" y="20" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" fill="white">Потоки</text>
-    <text x="70" y="40" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#10b981">100-500</text>
-    
-    <!-- Дни -->
-    <rect x="130" y="0" width="100" height="60" rx="8" fill="rgba(239, 68, 68, 0.2)" stroke="#ef4444" stroke-width="2"/>
-    <text x="180" y="20" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" fill="white">730 дней</text>
-    <text x="180" y="40" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#ef4444">Марафон</text>
+  <rect width="1200" height="600" fill="url(#bg)"/>
+  <!-- Логотип PLEX ONE -->
+  <g filter="url(#glow)">
+    <circle cx="180" cy="300" r="90" fill="#fff"/>
+    <text x="180" y="330" text-anchor="middle" font-size="110" font-family="Arial,sans-serif" font-weight="bold" fill="#3b82f6">P</text>
   </g>
-  
-  <!-- Логотип в углу -->
-  <g transform="translate(50, 50)">
-    <rect width="50" height="50" rx="6" fill="url(#textGradient)"/>
-    <text x="25" y="30" text-anchor="middle" font-family="Arial, sans-serif" font-size="20" font-weight="bold" fill="white">P</text>
-  </g>
+  <!-- Заголовок -->
+  <text x="340" y="200" font-size="60" font-family="Arial,sans-serif" font-weight="bold" fill="#fff" letter-spacing="2">PLEX ONE Marathon</text>
+  <!-- Слоган -->
+  <text x="340" y="270" font-size="32" font-family="Arial,sans-serif" fill="#e0e7ef">Криптомарафон на BSC</text>
+  <!-- Внизу -->
+  <text x="340" y="550" font-size="28" font-family="Arial,sans-serif" fill="#60a5fa">🚀 730 дней | Призы | DeFi</text>
 </svg> 

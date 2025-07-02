@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1200" height="630" viewBox="0 0 1200 630" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1200" y2="630" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#f3f4f6"/>
+      <stop offset="1" stop-color="#e0e7ef"/>
+    </linearGradient>
+    <filter id="glow" x="0" y="0" width="300" height="300">
+      <feGaussianBlur stdDeviation="20" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <!-- Логотип PLEX ONE -->
+  <g filter="url(#glow)">
+    <circle cx="600" cy="315" r="90" fill="#3b82f6"/>
+    <text x="600" y="345" text-anchor="middle" font-size="110" font-family="Arial,sans-serif" font-weight="bold" fill="#fff">P</text>
+  </g>
+  <!-- Заголовок -->
+  <text x="50%" y="120" text-anchor="middle" font-size="60" font-family="Arial,sans-serif" font-weight="bold" fill="#1e3a8a" letter-spacing="2">PLEX ONE Marathon</text>
+  <!-- Слоган -->
+  <text x="50%" y="540" text-anchor="middle" font-size="36" font-family="Arial,sans-serif" fill="#374151">Криптомарафон на Binance Smart Chain</text>
+  <!-- Внизу -->
+  <text x="50%" y="610" text-anchor="middle" font-size="28" font-family="Arial,sans-serif" fill="#3b82f6">🚀 730 дней | Призы | DeFi</text>
+</svg> 
